@@ -8,5 +8,35 @@
         "email": "novichkoff93@gmail.com",
         "url": "http://github.com/artemnovichkov"
     },
-    "repository": "http://github.com/artemnovichkov/zeplin-extension"
+    "repository": "http://github.com/artemnovichkov/zeplin-extension",
+    "options": [
+        {
+            "name": "Text option",
+            "type": "text",
+            "id": "text_option",
+            "default": "Default text"
+        },
+        {
+            "name": "Switch option",
+            "type": "switch",
+            "id": "switch_option",
+            "default": true
+        },
+        {
+            "name": "Picker option",
+            "type": "picker",
+            "id": "picker_option",
+            "options": [
+                {
+                    "name": "First",
+                    "value": "1"
+                },
+                {
+                    "name": "Second",
+                    "value": "2"
+                }
+            ],
+            "default": "1"
+        }
+    ]
 } 
