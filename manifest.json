@@ -1,0 +1,12 @@
+{
+    "name": "Hello, Zeplin",
+    "description": "Exploration of Zeplin Extensions",
+    "version": "0.1.0",
+    "moduleURL": "index.js",
+    "author": {
+        "name": "Artem Novichkov",
+        "email": "novichkoff93@gmail.com",
+        "url": "http://github.com/artemnovichkov"
+    },
+    "repository": "http://github.com/artemnovichkov/zeplin-extension"
+} 
