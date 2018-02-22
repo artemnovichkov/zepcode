@@ -7,15 +7,13 @@ function styleguideTextStyles(context, textStyles) {
 };
 
 function layer(context, layer) {
-    var shadow = {
-        "blur": layer.shadows[0].blurRadius.toString()
-    }
-
-    var JSONString = JSON.stringify(shadow, null, 2);
-
+    var border = layer.borders[0]
+    var string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
+    var color = border.fill.color
+    string += "view.layer.borderColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor"
     return {
-        code: JSONString,
-        mode: "json"
+        code: string,
+        mode: "swift"
     }
 };
 
@@ -42,11 +40,7 @@ function generateColorExtension(colors) {
         string += "    "
         string += "static let "
         string += color.name
-        string += " = UIColor("
-        string += "red: " + color.r + "/255, "
-        string += "green: " + color.g + "/255, "
-        string += "blue: " + color.b + "/255, "
-        string += "alpha: " + color.a + ")\n"
+        string += " = " + uiColor(color.r, color.g, color.b, color.a) + "\n"
     }
     string += "}"
     
@@ -55,6 +49,15 @@ function generateColorExtension(colors) {
         mode: "swift",
         filename: "UIColor+AppColors.swift"
     }
+}
+
+function uiColor(r, g, b, a) {
+    var string = "UIColor("
+    string += "red: " + r + "/255, "
+    string += "green: " + g + "/255, "
+    string += "blue: " + b + "/255, "
+    string += "alpha: " + a + ")"
+    return string
 }
 
 function generateFontExtension(textStyles) {
