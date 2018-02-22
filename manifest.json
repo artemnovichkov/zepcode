@@ -14,7 +14,7 @@
             "name": "Text option",
             "type": "text",
             "id": "text_option",
-            "default": "Default text"
+            "default": "for iOS"
         },
         {
             "name": "Switch option",

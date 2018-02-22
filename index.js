@@ -20,7 +20,8 @@ function layer(context, layer) {
 };
 
 function comment(context, text) {
-    return text
+    var textOption = context.getOption("text_option")
+    return text + " " + textOption
 };
 
 function exportStyleguideColors(context, colors) {
