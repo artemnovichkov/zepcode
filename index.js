@@ -15,7 +15,7 @@ function layer(context, layer) {
         string += "view.layer.borderColor = "
         var color = border.fill.color
         if (color) {
-            string += cgColor(border.fill.color, useColorNames)
+            string += cgColor(border.fill.color, context.project, useColorNames)
         }
         string += "view.layer.cornerRadius = " + layer.borderRadius
     }
@@ -27,7 +27,7 @@ function layer(context, layer) {
         string += "view.layer.shadowColor = "
         var color = shadow.color
         if (color) {
-            string += cgColor(shadow.color, useColorNames)
+            string += cgColor(shadow.color, context.project, useColorNames)
         }
         string += "view.layer.shadowOffset = CGSize(width: " + shadow.offsetX + ", height: " + shadow.offsetY + ")\n"
         string += "view.layer.shadowRadius = " + layer.borderRadius
@@ -81,7 +81,8 @@ function uiColor(r, g, b, a) {
     return string
 }
 
-function cgColor(color, useColorNames) {
+function cgColor(color, project, useColorNames) {
+    var color = project.findColorEqual(color)
     if (useColorNames && color.name) {
         return "UIColor." + color.name + ".cgColor\n"
     }
