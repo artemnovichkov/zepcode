@@ -1,5 +1,5 @@
 {
-    "name": "Hello, Zeplin",
+    "name": "Zepcode",
     "description": "Generates Swift snippets from colors, fonts and layers.",
     "version": "0.1.0",
     "moduleURL": "index.js",
@@ -8,7 +8,7 @@
         "email": "novichkoff93@gmail.com",
         "url": "http://github.com/artemnovichkov"
     },
-    "repository": "http://github.com/artemnovichkov/zeplin-extension",
+    "repository": "http://github.com/artemnovichkov/zepcode",
     "options": [
         {
             "name": "Text option",

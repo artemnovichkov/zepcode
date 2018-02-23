@@ -1,4 +1,4 @@
-# zeplin-extension
+# Zepcode
 Generates Swift snippets from colors, fonts and layers.
 
 <p align="center">
@@ -101,4 +101,4 @@ Artem Novichkov, novichkoff93@gmail.com
 
 ## License
 
-zeplin-extension is available under the MIT license. See the LICENSE file for more info.
+Zepcode is available under the MIT license. See the LICENSE file for more info.
