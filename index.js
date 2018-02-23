@@ -81,6 +81,13 @@ function uiColor(r, g, b, a) {
     return string
 }
 
+function cgColor(color, useColorNames) {
+    if (useColorNames && color.name) {
+        return "UIColor." + color.name + ".cgColor\n"
+    }
+    return uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+}
+
 function generateFontExtension(textStyles) {
     var string = "import UIKit\n\n"
     string += "extension UIFont {\n\n"
@@ -106,11 +113,4 @@ function camelize(str) {
     return str.replace(/\W+(.)/g, function(match, chr) {
           return chr.toUpperCase();
       });
-}
-
-function cgColor(color, useColorNames) {
-    if (useColorNames && color.name) {
-        return "UIColor." + color.name + ".cgColor\n"
-    }
-    return uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
 }
