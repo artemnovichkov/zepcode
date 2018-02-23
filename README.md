@@ -50,7 +50,7 @@ extension UIFont {
 
 ```swift
 view.layer.borderWidth = 4
-view.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1).cgColor
+view.layer.borderColor = UIColor.white.cgColor
 view.layer.cornerRadius = 40
 ```
 
@@ -63,7 +63,7 @@ view.layer.cornerRadius = 40
 <p>
 
 ```swift
-view.layer.shadowColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.08).cgColor
+view.layer.shadowColor = UIColor.black8.cgColor
 view.layer.shadowOffset = CGSize(width: 0, height: 4)
 view.layer.shadowRadius = 8
 ```
