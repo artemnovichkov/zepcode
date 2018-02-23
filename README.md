@@ -71,6 +71,24 @@ view.layer.shadowRadius = 8
 </p>
 </details>
 
+- 🎨 Gradients (Work in progress)
+
+<details><summary>Example</summary>
+<p>
+
+```swift
+let gradientLayer = CAGradientLayer()
+gradientLayer.frame = view.bounds
+gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+gradientLayer.colors = [UIColor.lightishRed.cgColor, UIColor.barbiePink.cgColor]
+gradientLayer.locations = [0, 1]
+view.layer.insertSublayer(gradientLayer, at: 0)
+```
+
+</p>
+</details>
+
 ## How to Install
 
 The instruction from official [tutorial](https://github.com/zeplin/zeplin-extension-documentation/blob/master/tutorial.md#adding-a-local-extension).

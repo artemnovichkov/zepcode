@@ -9,13 +9,17 @@ function styleguideTextStyles(context, textStyles) {
 function layer(context, layer) {
     var string = ""
     var useColorNames = options(context).useColorNames
+    var gradient = layer.fills[0].gradient
+    if (gradient && gradient.type == "linear") {
+        string += linearGradientLayer(gradient, context.project, useColorNames)
+    }
     if (layer.borders.length > 0) {
         var border = layer.borders[0]
         string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
         string += "view.layer.borderColor = "
         var color = border.fill.color
         if (color) {
-            string += cgColor(border.fill.color, context.project, useColorNames)
+            string += cgColor(border.fill.color, context.project, useColorNames) + "\n"
         }
         string += "view.layer.cornerRadius = " + layer.borderRadius
     }
@@ -27,7 +31,7 @@ function layer(context, layer) {
         string += "view.layer.shadowColor = "
         var color = shadow.color
         if (color) {
-            string += cgColor(shadow.color, context.project, useColorNames)
+            string += cgColor(shadow.color, context.project, useColorNames) + "\n"
         }
         string += "view.layer.shadowOffset = CGSize(width: " + shadow.offsetX + ", height: " + shadow.offsetY + ")\n"
         string += "view.layer.shadowRadius = " + layer.borderRadius
@@ -63,7 +67,7 @@ function generateColorExtension(colors) {
         string += " = " + uiColor(color.r, color.g, color.b, color.a) + "\n"
     }
     string += "}"
-    
+
     return {
         code: string,
         mode: "swift",
@@ -81,10 +85,10 @@ function uiColor(r, g, b, a) {
 }
 
 function cgColor(color, project, useColorNames) {
-    var color = project.findColorEqual(color)
-    var cgColorPostfix = ".cgColor\n"
-    if (useColorNames && color.name) {
-        return "UIColor." + color.name + cgColorPostfix
+    var styleguideColor = project.findColorEqual(color)
+    var cgColorPostfix = ".cgColor"
+    if (useColorNames && styleguideColor) {
+        return "UIColor." + styleguideColor.name + cgColorPostfix
     }
     return uiColor(color.r, color.g, color.b, color.a) + cgColorPostfix
 }
@@ -102,7 +106,7 @@ function generateFontExtension(textStyles) {
         string += "    }"
     }
     string += "\n}"
-    
+
     return {
         code: string,
         mode: "swift",
@@ -111,9 +115,9 @@ function generateFontExtension(textStyles) {
 }
 
 function camelize(str) {
-    return str.replace(/\W+(.)/g, function(match, chr) {
-          return chr.toUpperCase();
-      });
+    return str.replace(/\W+(.)/g, function (match, chr) {
+        return chr.toUpperCase();
+    });
 }
 
 function options(context) {
@@ -122,4 +126,38 @@ function options(context) {
         useColorNames: context.getOption("use_color_names"),
         pickerOption: context.getOption("picker_option")
     }
+}
+
+function linearGradientLayer(gradient, project, useColorNames) {
+    var string = "let gradientLayer = CAGradientLayer()\n"
+    string += "gradientLayer.frame = view.bounds\n"
+    if (gradient.angle == 90) {
+        string += "gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)\n"
+        string += "gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)\n"
+    }
+
+    //Colors
+    string += "gradientLayer.colors = ["
+    for (var i in gradient.colorStops) {
+        var colorStop = gradient.colorStops[i]
+        string += cgColor(colorStop.color, project, useColorNames)
+        if (i != gradient.colorStops.length - 1) {
+            string += ", "
+        }
+    }
+    string += "]\n"
+
+    //Locations
+    string += "gradientLayer.locations = ["
+    for (var i in gradient.colorStops) {
+        var colorStop = gradient.colorStops[i]
+        string += colorStop.position
+        if (i != gradient.colorStops.length - 1) {
+            string += ", "
+        }
+    }
+    string += "]\n"
+
+    string += "view.layer.insertSublayer(gradientLayer, at: 0)"
+    return string
 }
