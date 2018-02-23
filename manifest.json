@@ -1,6 +1,6 @@
 {
     "name": "Hello, Zeplin",
-    "description": "Exploration of Zeplin Extensions",
+    "description": "Generates Swift snippets from colors, fonts and layers.",
     "version": "0.1.0",
     "moduleURL": "index.js",
     "author": {
