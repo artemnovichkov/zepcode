@@ -7,10 +7,22 @@ function styleguideTextStyles(context, textStyles) {
 };
 
 function layer(context, layer) {
-    var border = layer.borders[0]
-    var string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
-    var color = border.fill.color
-    string += "view.layer.borderColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor"
+    var string = ""
+    if (layer.borders.length > 0) {
+        var border = layer.borders[0]
+        string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
+        var color = border.fill.color
+        string += "view.layer.borderColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+        string += "view.layer.cornerRadius = " + layer.borderRadius
+    }
+    if (layer.shadows.length > 0) {
+        var shadow = layer.shadows[0]
+        string += "\n\n"
+        var color = shadow.color
+        string += "view.layer.shadowColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+        string += "view.layer.shadowOffset = CGSize(width: " + shadow.offsetX + ", height: " + shadow.offsetY + ")\n"
+        string += "view.layer.shadowRadius = " + layer.borderRadius
+    }
     return {
         code: string,
         mode: "swift"
