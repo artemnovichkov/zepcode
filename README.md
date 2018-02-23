@@ -1,5 +1,5 @@
 # zeplin-extension
-Exploration of Zeplin Extensions.
+Generates Swift snippets from colors, fonts and layers.
 
 <p align="center">
 <img src=".github/screenshot.png" />
