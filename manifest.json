@@ -17,9 +17,9 @@
             "default": "for iOS"
         },
         {
-            "name": "Switch option",
+            "name": "Use color names",
             "type": "switch",
-            "id": "switch_option",
+            "id": "use_color_names",
             "default": true
         },
         {
