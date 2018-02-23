@@ -8,7 +8,7 @@ function styleguideTextStyles(context, textStyles) {
 
 function layer(context, layer) {
     var string = ""
-    var useColorNames = context.getOption("use_color_names")
+    var useColorNames = options(context).useColorNames
     if (layer.borders.length > 0) {
         var border = layer.borders[0]
         string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
@@ -39,8 +39,7 @@ function layer(context, layer) {
 };
 
 function comment(context, text) {
-    var textOption = context.getOption("text_option")
-    return text + " " + textOption
+    return text + " " + options(context).textOption
 };
 
 function exportStyleguideColors(context, colors) {
@@ -83,10 +82,11 @@ function uiColor(r, g, b, a) {
 
 function cgColor(color, project, useColorNames) {
     var color = project.findColorEqual(color)
+    var cgColorPostfix = ".cgColor\n"
     if (useColorNames && color.name) {
-        return "UIColor." + color.name + ".cgColor\n"
+        return "UIColor." + color.name + cgColorPostfix
     }
-    return uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+    return uiColor(color.r, color.g, color.b, color.a) + cgColorPostfix
 }
 
 function generateFontExtension(textStyles) {
@@ -114,4 +114,12 @@ function camelize(str) {
     return str.replace(/\W+(.)/g, function(match, chr) {
           return chr.toUpperCase();
       });
+}
+
+function options(context) {
+    return {
+        textOption: context.getOption("text_option"),
+        useColorNames: context.getOption("use_color_names"),
+        pickerOption: context.getOption("picker_option")
+    }
 }
