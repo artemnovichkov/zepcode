@@ -8,18 +8,27 @@ function styleguideTextStyles(context, textStyles) {
 
 function layer(context, layer) {
     var string = ""
+    var useColorNames = context.getOption("use_color_names")
     if (layer.borders.length > 0) {
         var border = layer.borders[0]
         string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
+        string += "view.layer.borderColor = "
         var color = border.fill.color
-        string += "view.layer.borderColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+        if (color) {
+            string += cgColor(border.fill.color, useColorNames)
+        }
         string += "view.layer.cornerRadius = " + layer.borderRadius
     }
     if (layer.shadows.length > 0) {
         var shadow = layer.shadows[0]
-        string += "\n\n"
+        if (string.length > 0) {
+            string += "\n\n"
+        }
+        string += "view.layer.shadowColor = "
         var color = shadow.color
-        string += "view.layer.shadowColor = " + uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+        if (color) {
+            string += cgColor(shadow.color, useColorNames)
+        }
         string += "view.layer.shadowOffset = CGSize(width: " + shadow.offsetX + ", height: " + shadow.offsetY + ")\n"
         string += "view.layer.shadowRadius = " + layer.borderRadius
     }
@@ -97,4 +106,11 @@ function camelize(str) {
     return str.replace(/\W+(.)/g, function(match, chr) {
           return chr.toUpperCase();
       });
-  }
+}
+
+function cgColor(color, useColorNames) {
+    if (useColorNames && color.name) {
+        return "UIColor." + color.name + ".cgColor\n"
+    }
+    return uiColor(color.r, color.g, color.b, color.a) + ".cgColor\n"
+}
