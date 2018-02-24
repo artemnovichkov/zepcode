@@ -14,8 +14,10 @@ function layer(context, layer) {
         switch (gradient.type) {
             case "linear":
                 string += linearGradientLayer(gradient, context.project, useColorNames)
+                break;
             case "radial":
                 string += radialGradientLayer(gradient, context.project, useColorNames)
+                break;
         }
     }
     if (layer.borders.length > 0) {
