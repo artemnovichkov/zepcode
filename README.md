@@ -81,7 +81,7 @@ Generates Swift snippets from colors, fonts and layers.
 
   ```swift
   final class RadialGradientView: UIView {
-  
+
       private var radius: CGFloat {
           return min(bounds.width / 2, bounds.height / 2)
       }
@@ -129,13 +129,36 @@ Generates Swift snippets from colors, fonts and layers.
 
 ## How to Install
 
-The instruction from official [tutorial](https://github.com/zeplin/zeplin-extension-documentation/blob/master/tutorial.md#adding-a-local-extension).
+Download and unzip [the latest release](https://github.com/artemnovichkov/zepcode/releases/tag/0.2.0).
+Follow the instruction from official [tutorial](https://github.com/zeplin/zeplin-extension-documentation/blob/master/tutorial.md#adding-a-local-extension).
 
-## Author
+## How to make a changes
 
-Artem Novichkov, novichkoff93@gmail.com
+First, you need last stable Node.js (`^8.9.4`). Follow this [guide](https://github.com/creationix/nvm/blob/master/README.md#installation) if you don't have any.
 
-[![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/artemnovichkov?utm_source=github&utm_medium=button&utm_term=artemnovichkov&utm_campaign=github)
+Next, install project dependencies:
+
+```bash
+npm i
+```
+
+To start developing run:
+
+```bash
+  npm start
+```
+
+And finaly, to make a production ready build run:
+
+```bash
+npm run build
+```
+
+## Authors
+
+Artem Novichkov, novichkoff93@gmail.com [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/artemnovichkov?utm_source=github&utm_medium=button&utm_term=artemnovichkov&utm_campaign=github)
+
+Baybara Pavel, baybara.pavel@gmail.com
 
 ## License
 
