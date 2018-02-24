@@ -122,9 +122,7 @@ function camelize(str) {
 
 function options(context) {
     return {
-        textOption: context.getOption("text_option"),
-        useColorNames: context.getOption("use_color_names"),
-        pickerOption: context.getOption("picker_option")
+        useColorNames: context.getOption("use_color_names")
     }
 }
 
