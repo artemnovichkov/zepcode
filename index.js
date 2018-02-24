@@ -10,12 +10,20 @@ function layer(context, layer) {
     var string = ""
     var useColorNames = options(context).useColorNames
     var gradient = layer.fills[0].gradient
-    if (gradient && gradient.type == "linear") {
-        string += linearGradientLayer(gradient, context.project, useColorNames)
+    if (gradient) {
+        switch (gradient.type) {
+            case "linear":
+                string += linearGradientLayer(gradient, context.project, useColorNames)
+            case "radial":
+                string += radialGradientLayer(gradient, context.project, useColorNames)
+        }
     }
     if (layer.borders.length > 0) {
         var border = layer.borders[0]
-        string = "view.layer.borderWidth = " + border.thickness.toString() + "\n"
+        if (string.length > 0) {
+            string += "\n\n"
+        }
+        string += "view.layer.borderWidth = " + border.thickness.toString() + "\n"
         string += "view.layer.borderColor = "
         var color = border.fill.color
         if (color) {
@@ -61,7 +69,7 @@ function generateColorExtension(colors) {
     string += "extension UIColor {\n\n"
     for (var i in colors) {
         var color = colors[i]
-        string += "    "
+        string += " ".repeat(4)
         string += "static let "
         string += color.name
         string += " = " + uiColor(color.r, color.g, color.b, color.a) + "\n"
@@ -101,7 +109,7 @@ function generateFontExtension(textStyles) {
         string += "    "
         string += "static func "
         string += camelize(style.fontFace)
-        string += "(ofSize: CGFloat) -> UIFont {\n        return UIFont(name: \"" + style.fontFace + "\", "
+        string += "(ofSize: CGFloat) -> UIFont {\n" + " ".repeat(8) + "return UIFont(name: \"" + style.fontFace + "\", "
         string += "size: size)!\n"
         string += "    }"
     }
@@ -157,5 +165,59 @@ function linearGradientLayer(gradient, project, useColorNames) {
     string += "]\n"
 
     string += "view.layer.insertSublayer(gradientLayer, at: 0)"
+    return string
+}
+
+function radialGradientLayer(gradient, project, useColorNames) {
+    var string = "final class RadialGradientView: UIView {\n\n"
+
+    string += " ".repeat(4) + "private var radius: CGFloat {\n" + " ".repeat(8) + "return min(bounds.width / 2, bounds.height / 2)\n"
+    string += " ".repeat(4) + "}\n\n"
+    //Colors
+    string += " ".repeat(4) + "private let colors = ["
+    for (var i in gradient.colorStops) {
+        var colorStop = gradient.colorStops[i]
+        string += cgColor(colorStop.color, project, useColorNames)
+        if (i != gradient.colorStops.length - 1) {
+            string += ", "
+        }
+    }
+    string += "]\n\n"
+
+    //Inits
+    string += " ".repeat(4) + "override init(frame: CGRect) {\n"
+    string += " ".repeat(8) + "super.init(frame: frame)\n"
+    string += " ".repeat(8) + "clipsToBounds = true\n"
+    string += " ".repeat(4) + "}\n\n"
+
+    string += " ".repeat(4) + "required init?(coder aDecoder: NSCoder) {\n"
+    string += " ".repeat(8) + "fatalError(\"init(coder:) has not been implemented\")\n"
+    string += " ".repeat(4) + "}\n\n"
+
+    //layoutSubviews
+    string += " ".repeat(4) + "override func layoutSubviews() {\n"
+    string += " ".repeat(8) + "super.layoutSubviews()\n"
+    string += " ".repeat(8) + "layer.cornerRadius = radius\n"
+    string += " ".repeat(4) + "}\n\n"
+
+    //Draw rect
+    string += " ".repeat(4) + "override func draw(_ rect: CGRect) {\n"
+    string += " ".repeat(8) + "let context = UIGraphicsGetCurrentContext()\n\n"
+    string += " ".repeat(8) + "let colorSpace = CGColorSpaceCreateDeviceRGB()\n"
+    string += " ".repeat(8) + "let colorsCount = colors.count\n"
+    string += " ".repeat(8) + "var locations = (0...colorsCount - 1).map { i in\n"
+    string += " ".repeat(12) + "return CGFloat(i) / CGFloat(colorsCount)\n"
+    string += " ".repeat(8) + "}\n\n"
+    string += " ".repeat(8) + "guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: locations) else {\n"
+    string += " ".repeat(12) + "return\n"
+    string += " ".repeat(8) + "}\n\n"
+    string += " ".repeat(8) + "context?.drawRadialGradient(gradient,\n"
+    string += " ".repeat(35) + "startCenter: center,\n"
+    string += " ".repeat(35) + "startRadius: 0,\n"
+    string += " ".repeat(35) + "endCenter: center,\n"
+    string += " ".repeat(35) + "endRadius: radius,\n"
+    string += " ".repeat(35) + "options: CGGradientDrawingOptions(rawValue: 0))\n"
+    string += " ".repeat(8) + "}\n"
+    string += "}\n"
     return string
 }
