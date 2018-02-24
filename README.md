@@ -9,85 +9,74 @@ Generates Swift snippets from colors, fonts and layers.
 
 - 🖍 Color pallette for iOS
 
-<details><summary>Example</summary>
-<p>
+  <details><summary>Example</summary>
 
-```swift
-import UIKit
+  ```swift
+  import UIKit
 
-extension UIColor {
+  extension UIColor {
 
-    static let electricBlue = UIColor(red: 0/255, green: 86/255, blue: 255/255, alpha: 1)
-}
-```
-
-</p>
-</details>
+      static let electricBlue = UIColor(red: 0/255, green: 86/255, blue: 255/255, alpha: 1)
+  }
+  ```
+  </details>
 
 - ✏️ Fonts for iOS
 
-<details><summary>Example</summary>
-<p>
+  <details><summary>Example</summary>
 
-```swift
-import UIKit
+  ```swift
+  import UIKit
 
-extension UIFont {
+  extension UIFont {
 
-    static func BloggerSansBold(ofSize: CGFloat) -> UIFont {
-        return UIFont(name: "BloggerSans-Bold", size: size)!
-    }
-}
-```
+      static func BloggerSansBold(ofSize: CGFloat) -> UIFont {
+          return UIFont(name: "BloggerSans-Bold", size: size)!
+      }
+  }
+  ```
 
-</p>
-</details>
+  </details>
 
 - 🚧 Snippets for borders and corner radius
 
-<details><summary>Example</summary>
-<p>
+  <details><summary>Example</summary>
 
-```swift
-view.layer.borderWidth = 4
-view.layer.borderColor = UIColor.white.cgColor
-view.layer.cornerRadius = 40
-```
+  ```swift
+  view.layer.borderWidth = 4
+  view.layer.borderColor = UIColor.white.cgColor
+  view.layer.cornerRadius = 40
+  ```
 
-</p>
-</details>
+  </details>
 
 - 🌚 Snippets for shadows
 
-<details><summary>Example</summary>
-<p>
+  <details><summary>Example</summary>
 
-```swift
-view.layer.shadowColor = UIColor.black8.cgColor
-view.layer.shadowOffset = CGSize(width: 0, height: 4)
-view.layer.shadowRadius = 8
-```
+  ```swift
+  view.layer.shadowColor = UIColor.black8.cgColor
+  view.layer.shadowOffset = CGSize(width: 0, height: 4)
+  view.layer.shadowRadius = 8
+  ```
 
-</p>
-</details>
+  </details>
 
 - 🎨 Gradients (Work in progress)
 
-<details><summary>Example</summary>
-<p>
+  <details><summary>Example</summary>
 
-```swift
-let gradientLayer = CAGradientLayer()
-gradientLayer.frame = view.bounds
-gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-gradientLayer.colors = [UIColor.lightishRed.cgColor, UIColor.barbiePink.cgColor]
-gradientLayer.locations = [0, 1]
-view.layer.insertSublayer(gradientLayer, at: 0)
-```
+  ```swift
+  let gradientLayer = CAGradientLayer()
+  gradientLayer.frame = view.bounds
+  gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+  gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+  gradientLayer.colors = [UIColor.lightishRed.cgColor, UIColor.barbiePink.cgColor]
+  gradientLayer.locations = [0, 1]
+  view.layer.insertSublayer(gradientLayer, at: 0)
+  ```
 
-</p>
-</details>
+  </details>
 
 ## How to Install
 
