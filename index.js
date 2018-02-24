@@ -20,6 +20,12 @@ function layer(context, layer) {
                 break;
         }
     }
+    if (layer.opacity != 1) {
+        if (string.length > 0) {
+            string += "\n\n"
+        }
+        string += "view.alpha = " + layer.opacity.toFixed(2)
+    }
     if (layer.borders.length > 0) {
         var border = layer.borders[0]
         if (string.length > 0) {
