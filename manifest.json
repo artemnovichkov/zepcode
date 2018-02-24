@@ -11,32 +11,10 @@
     "repository": "http://github.com/artemnovichkov/zepcode",
     "options": [
         {
-            "name": "Text option",
-            "type": "text",
-            "id": "text_option",
-            "default": "for iOS"
-        },
-        {
             "name": "Use color names",
             "type": "switch",
             "id": "use_color_names",
             "default": true
-        },
-        {
-            "name": "Picker option",
-            "type": "picker",
-            "id": "picker_option",
-            "options": [
-                {
-                    "name": "First",
-                    "value": "1"
-                },
-                {
-                    "name": "Second",
-                    "value": "2"
-                }
-            ],
-            "default": "1"
         }
     ]
 } 
