@@ -1,6 +1,6 @@
 {
   "name": "zepcode",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Generates Swift snippets from colors, fonts and layers",
   "main": "index.js",
   "lint-staged": {
