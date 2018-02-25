@@ -1,9 +1,13 @@
-# Zepcode
+<p align="center">
+<img src=".github/zepcode-logo.png" width="400" />
+</p>
+<p align="center">
+  <a href="https://extensions.zeplin.io">
+    <img src="https://img.shields.io/badge/zeplin-extension-ffbe12.svg" alt="Zeplin Extension" />
+  </a>
+</p>
 Generates Swift snippets from colors, fonts and layers.
 
-<p align="center">
-<img src=".github/screenshot.png" />
-</p>
 
 ## Features
 
@@ -145,7 +149,7 @@ npm i
 To start developing run:
 
 ```bash
-  npm start
+npm start
 ```
 
 And finally, to make a production ready build run:
