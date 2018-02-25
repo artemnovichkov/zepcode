@@ -39,7 +39,7 @@ export function layer(context, layerParams) {
   }
   if (layerParams.borders.length > 0) {
     const border = layerParams.borders[0];
-    string = `view.layer.borderWidth = ${border.thickness.toString()}\n`;
+    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
     const { color } = border.fill;
     if (color !== undefined) {
       const borderColorString = cgColor(
