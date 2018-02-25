@@ -35,7 +35,7 @@ export function layer(context, layerParams) {
     if (string.length > 0) {
       string += '\n\n';
     }
-    string += `view.alpha = ${layerParams.opacity.toFixed(2)}`;
+    string += `view.alpha = ${layerParams.opacity.toFixed(2)}\n`;
   }
   if (layerParams.borders.length > 0) {
     const border = layerParams.borders[0];
