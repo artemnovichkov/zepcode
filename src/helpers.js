@@ -2,25 +2,23 @@ function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
 }
 
-function uiColor(r, g, b, a) {
-  let string = 'UIColor(';
-  string += `red: ${r}/255, `;
-  string += `green: ${g}/255, `;
-  string += `blue: ${b}/255, `;
-  string += `alpha: ${a})`;
-  return string;
+function uiColor(color) {
+  return `UIColor(red: ${color.r}/255, green: ${color.g}/255, blue: ${
+    color.b
+  }/255, alpha: ${color.a})`;
 }
 
 export function generateColorExtension(colors) {
+  let colorsString = '';
+  colors.forEach(color => {
+    colorsString += `${' '.repeat(4)}static let ${color.name} = ${uiColor(
+      color
+    )}\n`;
+  });
+
   let string = 'import UIKit\n\n';
   string += 'extension UIColor {\n\n';
-  Object.keys(colors).forEach(i => {
-    const color = colors[i];
-    string += '    ';
-    string += 'static let ';
-    string += color.name;
-    string += ` = uiColor(color.r, color.g, color.b, color.a)\n`;
-  });
+  string += colorsString;
   string += '}';
 
   return {
@@ -36,23 +34,25 @@ export function cgColor(color, project, useColorNames) {
   if (useColorNames && styleguideColor) {
     return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
   }
-  return uiColor(color.r, color.g, color.b, color.a) + cgColorPostfix;
+  return uiColor(color) + cgColorPostfix;
 }
 
 export function generateFontExtension(textStyles) {
-  let string = 'import UIKit\n\n';
-  string += 'extension UIFont {\n\n';
-  Object.keys(textStyles).forEach(i => {
-    const style = textStyles[i];
-    string += '    ';
-    string += 'static func ';
-    string += camelize(style.fontFace);
-    string += `(ofSize: CGFloat) -> UIFont {\n
-      return UIFont(name: "${style.fontFace}", `;
-    string += 'size: size)!\n';
-    string += '    }';
+  let fontsString = '';
+  textStyles.forEach(style => {
+    fontsString += `${' '.repeat(4)}static func ${camelize(
+      style.fontFace
+    )}(ofSize: CGFloat) -> UIFont {\n\n`;
+    fontsString += `${' '.repeat(8)}return UIFont(name: "${
+      style.fontFace
+    }", size: size)!\n`;
+    fontsString += `${' '.repeat(4)}}\n`;
   });
-  string += '\n}';
+
+  let string = 'import UIKit\n\n';
+  string += 'extension UIFont {\n';
+  string += fontsString;
+  string += '}';
 
   return {
     code: string,
@@ -68,6 +68,19 @@ export function options(context) {
 }
 
 export function linearGradientLayer(gradient, project, useColorNames) {
+  let colorStopsString = '';
+  let colorStopsPositionString = '';
+  const { colorStops } = gradient;
+  colorStops.forEach((colorStop, index) => {
+    const divideString = `${index !== colorStops.length - 1 ? ', ' : ''}`;
+    colorStopsString += `${cgColor(
+      colorStop.color,
+      project,
+      useColorNames
+    )}${divideString}`;
+    colorStopsPositionString += `${colorStop.position}${divideString}`;
+  });
+
   let string = 'let gradientLayer = CAGradientLayer()\n';
   string += 'gradientLayer.frame = view.bounds\n';
   if (gradient.angle === 90) {
@@ -76,48 +89,29 @@ export function linearGradientLayer(gradient, project, useColorNames) {
   }
 
   // Colors
-  string += 'gradientLayer.colors = [';
-  const colorStops = Object.keys(gradient.colorStops);
-  colorStops.forEach((i, index) => {
-    const colorStop = gradient.colorStops[i];
-    string += cgColor(colorStop.color, project, useColorNames);
-    if (index !== colorStops.length - 1) {
-      string += ', ';
-    }
-  });
-  string += ']\n';
+  string += `gradientLayer.colors = [${colorStopsString}]\n`;
 
   // Locations
-  string += 'gradientLayer.locations = [';
-  colorStops.forEach((i, index) => {
-    const colorStop = gradient.colorStops[i];
-    string += colorStop.position;
-    if (index !== colorStops.length - 1) {
-      string += ', ';
-    }
-  });
-  string += ']\n';
+  string += `gradientLayer.locations = [${colorStopsPositionString}]\n`;
 
   string += 'view.layer.insertSublayer(gradientLayer, at: 0)';
   return string;
 }
 
 export function radialGradientLayer(gradient, project, useColorNames) {
+  const { colorStops } = gradient;
+  let colorStopsString = '';
+  colorStops.forEach((colorStop, index) => {
+    colorStopsString += cgColor(colorStop.color, project, useColorNames);
+    colorStopsString += `${index !== colorStops.length - 1 ? ', ' : ''}`;
+  });
+
   let string = 'final class RadialGradientView: UIView {\n\n';
   string += `${' '.repeat(4)}private var radius: CGFloat {\n`;
   string += `${' '.repeat(8)}return min(bounds.width / 2, bounds.height / 2)\n`;
   string += `${' '.repeat(4)}}\n\n`;
   // Colors
-  string += `${' '.repeat(4)}private let colors = [`;
-  const colorStops = Object.keys(gradient.colorStops);
-  colorStops.forEach((i, index) => {
-    const colorStop = gradient.colorStops[i];
-    string += cgColor(colorStop.color, project, useColorNames);
-    if (index !== colorStops.length - 1) {
-      string += ', ';
-    }
-  });
-  string += ']\n\n';
+  string += `${' '.repeat(4)}private let colors = [${colorStopsString}]\n\n`;
 
   // Inits
   string += `${' '.repeat(4)}override init(frame: CGRect) {\n`;

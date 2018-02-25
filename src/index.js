@@ -19,7 +19,7 @@ export function layer(context, layerParams) {
   let string = '';
   const { useColorNames } = options(context);
   const { gradient } = layerParams.fills[0];
-  if (gradient) {
+  if (gradient !== undefined) {
     switch (gradient.type) {
       case 'linear':
         string += linearGradientLayer(gradient, context.project, useColorNames);
@@ -40,14 +40,14 @@ export function layer(context, layerParams) {
   if (layerParams.borders.length > 0) {
     const border = layerParams.borders[0];
     string = `view.layer.borderWidth = ${border.thickness.toString()}\n`;
-    string += 'view.layer.borderColor = ';
     const { color } = border.fill;
-    if (color) {
-      string += `${cgColor(
+    if (color !== undefined) {
+      const borderColorString = cgColor(
         border.fill.color,
         context.project,
         useColorNames
-      )}\n`;
+      );
+      string += `view.layer.borderColor = ${borderColorString}\n`;
     }
     string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
@@ -56,24 +56,30 @@ export function layer(context, layerParams) {
     if (string.length > 0) {
       string += '\n\n';
     }
-    string += 'view.layer.shadowColor = ';
     const { color } = shadow;
     if (color) {
-      string += `${cgColor(shadow.color, context.project, useColorNames)}\n`;
+      const shadowColor = cgColor(shadow.color, context.project, useColorNames);
+      string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
     string += `view.layer.shadowOffset = CGSize(width: ${
       shadow.offsetX
     }, height: ${shadow.offsetY})\n`;
     string += `view.layer.shadowRadius = ${layerParams.borderRadius}`;
   }
-  return {
-    code: string,
-    mode: 'swift',
-  };
+
+  let result = {};
+  if (string.length) {
+    result = {
+      code: string,
+      mode: 'swift',
+    };
+  }
+  return result;
 }
 
 export function comment(context, text) {
-  return `${text}  ${options(context).textOption}`;
+  const { textOption } = options(context);
+  return `${text}  ${textOption !== undefined ? textOption : ''}`;
 }
 
 export function exportStyleguideColors(context, colors) {
