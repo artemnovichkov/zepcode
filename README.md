@@ -1,13 +1,14 @@
+<p align="right">Builded with <a href="https://github.com/baybara-pavel/zero">Zero</a></p>
 <p align="center">
 <img src=".github/zepcode-logo.png" width="400" />
 </p>
+
 <p align="center">
   <a href="https://extensions.zeplin.io">
     <img src="https://img.shields.io/badge/zeplin-extension-ffbe12.svg" alt="Zeplin Extension" />
   </a>
 </p>
 Generates Swift snippets from colors, fonts and layers.
-
 
 ## Features
 
@@ -138,7 +139,7 @@ Follow the instruction from official [tutorial](https://github.com/zeplin/zeplin
 
 ## How to make a changes
 
-First, you need last stable Node.js (`^8.9.4`). Follow this [guide](https://github.com/creationix/nvm/blob/master/README.md#installation) if you don't have any.
+First, you need last stable Node.js `^8.9.4`. Follow this [guide](https://github.com/creationix/nvm/blob/master/README.md#installation) if you don't have any.
 
 Next, install project dependencies:
 
