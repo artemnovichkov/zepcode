@@ -1,4 +1,4 @@
-<p align="right">Builded with <a href="https://github.com/baybara-pavel/zero">Zero</a></p>
+<p align="right">Built with <a href="https://github.com/baybara-pavel/zero">Zero</a></p>
 <p align="center">
 <img src=".github/zepcode-logo.png" width="400" />
 </p>
