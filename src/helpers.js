@@ -64,10 +64,16 @@ export function generateFontExtension(textStyles) {
 export function options(context) {
   return {
     useColorNames: context.getOption('use_color_names'),
+    linearGradientClassName: context.getOption('linear_gradient_class_name'),
   };
 }
 
-export function linearGradientLayer(gradient, project, useColorNames) {
+export function linearGradientLayer(
+  gradient,
+  project,
+  useColorNames,
+  gradientClassName
+) {
   let colorStopsString = '';
   let colorStopsPositionString = '';
   const { colorStops } = gradient;
@@ -81,7 +87,7 @@ export function linearGradientLayer(gradient, project, useColorNames) {
     colorStopsPositionString += `${colorStop.position}${divideString}`;
   });
 
-  let string = 'let gradientLayer = CAGradientLayer()\n';
+  let string = `let gradientLayer = ${gradientClassName}()\n`;
   string += 'gradientLayer.frame = view.bounds\n';
   if (gradient.angle === 90) {
     string += 'gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)\n';
