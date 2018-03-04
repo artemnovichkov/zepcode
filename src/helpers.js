@@ -38,21 +38,25 @@ export function cgColor(color, project, useColorNames) {
 }
 
 export function generateFontExtension(textStyles) {
-  let fontsString = '';
-  textStyles.forEach(style => {
-    fontsString += `${' '.repeat(4)}static func ${camelize(
-      style.fontFace
-    )}(ofSize: CGFloat) -> UIFont {\n\n`;
-    fontsString += `${' '.repeat(8)}return UIFont(name: "${
-      style.fontFace
-    }", size: size)!\n`;
-    fontsString += `${' '.repeat(4)}}\n`;
+  const uniqueFonts = Array.from(
+    new Set(textStyles.map(style => style.fontFace))
+  ).sort();
+
+  const fonfacesFunctions = uniqueFonts.map(styleName => {
+    let result = '';
+    result += `${' '.repeat(4)}static func ${camelize(
+      styleName
+    )}(ofSize: CGFloat) -> UIFont {\n`;
+    result += `${' '.repeat(8)}`;
+    result += `return UIFont(name: "${styleName}", size: size)!\n`;
+    result += `${' '.repeat(4)}}`;
+    return result;
   });
 
   let string = 'import UIKit\n\n';
   string += 'extension UIFont {\n';
-  string += fontsString;
-  string += '}';
+  string += fonfacesFunctions.join('\n');
+  string += '\n}';
 
   return {
     code: string,
