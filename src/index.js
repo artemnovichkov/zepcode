@@ -49,6 +49,8 @@ export function layer(context, layerParams) {
       );
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
+  }
+  if (layerParams.borderRadius > 0) {
     string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
   if (layerParams.shadows.length > 0) {
