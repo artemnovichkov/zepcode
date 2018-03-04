@@ -1,7 +1,7 @@
 {
   "name": "Zepcode",
   "description": "Generates Swift snippets from colors, fonts and layers.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "moduleURL": "./index.js",
   "author": {
     "name": "Artem Novichkov",
