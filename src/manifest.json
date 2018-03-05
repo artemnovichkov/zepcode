@@ -15,6 +15,12 @@
       "type": "switch",
       "id": "use_color_names",
       "default": true
+    },
+    {
+      "name": "Linear gradient class name",
+      "type": "text",
+      "id": "linear_gradient_class_name",
+      "default": "CAGradientLayer"
     }
   ]
 }

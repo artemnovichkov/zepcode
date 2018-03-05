@@ -17,12 +17,17 @@ export function styleguideTextStyles(context, textStyles) {
 
 export function layer(context, layerParams) {
   let string = '';
-  const { useColorNames } = options(context);
+  const { useColorNames, linearGradientClassName } = options(context);
   const { gradient } = layerParams.fills[0];
   if (gradient !== undefined) {
     switch (gradient.type) {
       case 'linear':
-        string += linearGradientLayer(gradient, context.project, useColorNames);
+        string += linearGradientLayer(
+          gradient,
+          context.project,
+          useColorNames,
+          linearGradientClassName
+        );
         break;
       case 'radial':
         string += radialGradientLayer(gradient, context.project, useColorNames);
