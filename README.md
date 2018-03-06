@@ -131,6 +131,10 @@ Generates Swift snippets from colors, fonts and layers.
   ```
 
   </details>
+  
+## Options
+#### Use color names
+Use color names from Color Palette or `UIColor(red:green:alpha:)` initializers.
 
 ## How to Install
 
