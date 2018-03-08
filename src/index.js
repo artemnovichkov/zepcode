@@ -58,6 +58,9 @@ export function layer(context, layerParams) {
     }
   }
   if (layerParams.borderRadius > 0) {
+    if (string.length > 0) {
+      string += '\n\n';
+    }
     string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
   if (layerParams.shadows.length > 0) {
