@@ -25,6 +25,21 @@ Generates Swift snippets from colors, fonts and layers.
   }
   ```
   </details>
+  <details><summary>Example with custom initializer</summary>
+
+  ```swift
+  import UIKit
+
+  extension UIColor {
+
+        convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) {
+            self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: a)
+        }
+
+        static let electricBlue = UIColor(r: 0, g: 86, b: 255)
+    }
+  ```
+  </details>
 
 - ✏️ Fonts for iOS
 
@@ -133,8 +148,12 @@ Generates Swift snippets from colors, fonts and layers.
   </details>
   
 ## Options
+
 #### Use color names
 Use color names from Color Palette or default `UIColor(red:green:blue:alpha:)` initializers.
+
+#### Use custom color initializer
+Use `UIColor(r:g:b:a:)` initializer.
 
 ## How to Install
 

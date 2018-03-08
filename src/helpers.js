@@ -8,12 +8,34 @@ function uiColor(color) {
   }/255, alpha: ${color.a})`;
 }
 
-export function generateColorExtension(colors) {
+function customUIColor(color) {
+  let colorString = `UIColor(r: ${color.r}, g: ${color.g}, b: ${color.b}`;
+  if (color.a !== 1) {
+    colorString += `, a: ${color.a}`;
+  }
+  colorString += `)`;
+  return colorString;
+}
+
+export function generateColorExtension(colors, extensionOptions) {
   let colorsString = '';
+  if (extensionOptions.useCustomColorInitializer) {
+    colorsString += `${' '.repeat(
+      4
+    )}convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) {\n`;
+    colorsString += `${' '.repeat(
+      8
+    )}self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: a)`;
+    colorsString += `\n${' '.repeat(4)}}\n\n`;
+  }
   colors.forEach(color => {
-    colorsString += `${' '.repeat(4)}static let ${color.name} = ${uiColor(
-      color
-    )}\n`;
+    colorsString += `${' '.repeat(4)}static let ${color.name} = `;
+    if (extensionOptions.useCustomColorInitializer) {
+      colorsString += `${customUIColor(color)}`;
+    } else {
+      colorsString += `${uiColor(color)}`;
+    }
+    colorsString += `\n`;
   });
 
   let string = 'import UIKit\n\n';
@@ -28,11 +50,14 @@ export function generateColorExtension(colors) {
   };
 }
 
-export function cgColor(color, project, useColorNames) {
+export function cgColor(color, project, extensionOptions) {
   const styleguideColor = project.findColorEqual(color);
   const cgColorPostfix = '.cgColor';
-  if (useColorNames && styleguideColor) {
+  if (extensionOptions.useColorNames && styleguideColor) {
     return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
+  }
+  if (extensionOptions.useCustomColorInitializer) {
+    return customUIColor(color) + cgColorPostfix;
   }
   return uiColor(color) + cgColorPostfix;
 }
@@ -68,10 +93,13 @@ export function generateFontExtension(textStyles) {
 export function options(context) {
   return {
     useColorNames: context.getOption('use_color_names'),
+    useCustomColorInitializer: context.getOption(
+      'use_custom_color_initializer'
+    ),
   };
 }
 
-export function linearGradientLayer(gradient, project, useColorNames) {
+export function linearGradientLayer(gradient, project, extensionOptions) {
   let colorStopsString = '';
   let colorStopsPositionString = '';
   const { colorStops } = gradient;
@@ -80,7 +108,7 @@ export function linearGradientLayer(gradient, project, useColorNames) {
     colorStopsString += `${cgColor(
       colorStop.color,
       project,
-      useColorNames
+      extensionOptions
     )}${divideString}`;
     colorStopsPositionString += `${colorStop.position}${divideString}`;
   });
@@ -102,11 +130,11 @@ export function linearGradientLayer(gradient, project, useColorNames) {
   return string;
 }
 
-export function radialGradientLayer(gradient, project, useColorNames) {
+export function radialGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
   let colorStopsString = '';
   colorStops.forEach((colorStop, index) => {
-    colorStopsString += cgColor(colorStop.color, project, useColorNames);
+    colorStopsString += cgColor(colorStop.color, project, extensionOptions);
     colorStopsString += `${index !== colorStops.length - 1 ? ', ' : ''}`;
   });
 

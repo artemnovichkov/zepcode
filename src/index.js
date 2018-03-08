@@ -8,7 +8,7 @@ import {
 } from './helpers';
 
 export function styleguideColors(context, colors) {
-  return generateColorExtension(colors);
+  return generateColorExtension(colors, options(context));
 }
 
 export function styleguideTextStyles(context, textStyles) {
@@ -17,15 +17,22 @@ export function styleguideTextStyles(context, textStyles) {
 
 export function layer(context, layerParams) {
   let string = '';
-  const { useColorNames } = options(context);
   const { gradient } = layerParams.fills[0];
   if (gradient !== undefined) {
     switch (gradient.type) {
       case 'linear':
-        string += linearGradientLayer(gradient, context.project, useColorNames);
+        string += linearGradientLayer(
+          gradient,
+          context.project,
+          options(context)
+        );
         break;
       case 'radial':
-        string += radialGradientLayer(gradient, context.project, useColorNames);
+        string += radialGradientLayer(
+          gradient,
+          context.project,
+          options(context)
+        );
         break;
       default:
         break;
@@ -45,7 +52,7 @@ export function layer(context, layerParams) {
       const borderColorString = cgColor(
         border.fill.color,
         context.project,
-        useColorNames
+        options(context)
       );
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
@@ -60,7 +67,11 @@ export function layer(context, layerParams) {
     }
     const { color } = shadow;
     if (color) {
-      const shadowColor = cgColor(shadow.color, context.project, useColorNames);
+      const shadowColor = cgColor(
+        shadow.color,
+        context.project,
+        options(context)
+      );
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
     string += `view.layer.shadowOffset = CGSize(width: ${

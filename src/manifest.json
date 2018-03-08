@@ -1,7 +1,7 @@
 {
   "name": "Zepcode",
   "description": "Generates Swift snippets from colors, fonts and layers.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "moduleURL": "./index.js",
   "author": {
     "name": "Artem Novichkov",
@@ -15,6 +15,12 @@
       "type": "switch",
       "id": "use_color_names",
       "default": true
+    },
+    {
+      "name": "Use custom color initializer",
+      "type": "switch",
+      "id": "use_custom_color_initializer",
+      "default": false
     }
   ]
 }
