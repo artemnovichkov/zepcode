@@ -1,8 +1,7 @@
 {
   "name": "zepcode",
-  "version": "0.3.3",
-  "description": "Generates Swift snippets from colors, fonts and layers",
-  "main": "index.js",
+  "version": "0.4.0",
+  "description": "Generates Swift snippets from colors, fonts and layers.",
   "lint-staged": {
     "src/**/*.{js,json}": [
       "prettier --config .prettierrc --write",
@@ -11,48 +10,64 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "start": "webpack --config ./config/webpack.dev.js --progress --color",
-    "build": "webpack --config ./config/webpack.prod.js",
+    "start": "zem start",
+    "build": "zem build",
+    "clean": "zem clean",
+    "exec": "zem exec",
     "test:lint": "eslint --ext=js .",
     "test": "run-s test:**"
   },
+  "dependencies": {
+    "zem": "^0.1.1"
+  },
   "devDependencies": {
-    "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
-    "babel-loader": "7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "clean-webpack-plugin": "^0.1.18",
-    "copy-webpack-plugin": "^4.4.2",
-    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-friendly-formatter": "3.0.0",
-    "eslint-import-resolver-webpack": "^0.8.4",
     "eslint-loader": "1.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.5.0",
     "husky": "^0.14.3",
     "lint-staged": "^6.0.1",
     "npm-run-all": "^4.1.2",
-    "prettier": "^1.10.2",
-    "react-dev-utils": "^5.0.0",
-    "webpack": "3.8.1",
-    "webpack-merge": "4.1.2"
+    "prettier": "^1.10.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/artemnovichkov/zepcode.git"
+  "repository": "http://github.com/artemnovichkov/zepcode",
+  "author": {
+    "name": "Artem Novichkov",
+    "email": "novichkoff93@gmail.com",
+    "url": "http://github.com/artemnovichkov"
   },
-  "author": "Baybara Pavel",
+  "contributors": [{
+    "name": "Pavel Baybara",
+    "email": "baybara.pavel@gmail.com",
+    "url": "https://github.com/baybara-pavel"
+  }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/artemnovichkov/zepcode/issues"
   },
   "homepage": "https://github.com/artemnovichkov/zepcode#readme",
-  "babel": {
-    "presets": [
-      "env"
+  "zeplin": {
+    "displayName": "Zepcode",
+    "projectTypes": [
+      "ios"
+    ],
+
+    "repository": "http://github.com/artemnovichkov/zepcode",
+    "options": [
+      {
+        "name": "Use color names",
+        "type": "switch",
+        "id": "use_color_names",
+        "default": true
+      },
+      {
+        "name": "Use custom color initializer",
+        "type": "switch",
+        "id": "use_custom_color_initializer",
+        "default": false
+      }
     ]
   }
 }
