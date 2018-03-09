@@ -14,7 +14,6 @@
     "start": "webpack --config ./config/webpack.dev.js --progress --color",
     "build": "webpack --config ./config/webpack.prod.js",
     "test:lint": "eslint --ext=js .",
-    "test:unit": "echo \"Error: no test specified\" && exit 1",
     "test": "run-s test:**"
   },
   "devDependencies": {
