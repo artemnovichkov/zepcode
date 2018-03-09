@@ -1,4 +1,3 @@
-<p align="right">Built with <a href="https://github.com/baybara-pavel/zero">Zero</a></p>
 <p align="center">
 <img src=".github/zepcode-logo.png" width="400" />
 </p>
@@ -146,7 +145,7 @@ Generates Swift snippets from colors, fonts and layers.
   ```
 
   </details>
-  
+
 ## Options
 
 #### Use color names
@@ -170,17 +169,11 @@ Next, install project dependencies:
 npm i
 ```
 
-To start developing run:
+To start developing, to make a build or to execute some functions from extension follow this [guide](https://github.com/zeplin/zem#scripts).
 
-```bash
-npm start
-```
+To learn more about zem, [see documentation](https://github.com/zeplin/zem).
 
-And finally, to make a production ready build run:
-
-```bash
-npm run build
-```
+If you like to take full control of your build process you can try [zero](https://github.com/baybara-pavel/zero) boilerplate.
 
 ## Authors
 

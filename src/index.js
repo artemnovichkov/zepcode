@@ -7,35 +7,37 @@ import {
   radialGradientLayer,
 } from './helpers';
 
-export function styleguideColors(context, colors) {
+function styleguideColors(context, colors) {
   return generateColorExtension(colors, options(context));
 }
 
-export function styleguideTextStyles(context, textStyles) {
+function styleguideTextStyles(context, textStyles) {
   return generateFontExtension(textStyles);
 }
 
-export function layer(context, layerParams) {
+function layer(context, layerParams) {
   let string = '';
-  const { gradient } = layerParams.fills[0];
-  if (gradient !== undefined) {
-    switch (gradient.type) {
-      case 'linear':
-        string += linearGradientLayer(
-          gradient,
-          context.project,
-          options(context)
-        );
-        break;
-      case 'radial':
-        string += radialGradientLayer(
-          gradient,
-          context.project,
-          options(context)
-        );
-        break;
-      default:
-        break;
+  if (layerParams.fills.length) {
+    const { gradient } = layerParams.fills[0];
+    if (gradient !== undefined) {
+      switch (gradient.type) {
+        case 'linear':
+          string += linearGradientLayer(
+            gradient,
+            context.project,
+            options(context)
+          );
+          break;
+        case 'radial':
+          string += radialGradientLayer(
+            gradient,
+            context.project,
+            options(context)
+          );
+          break;
+        default:
+          break;
+      }
     }
   }
   if (layerParams.opacity !== 1) {
@@ -93,15 +95,24 @@ export function layer(context, layerParams) {
   return result;
 }
 
-export function comment(context, text) {
+function comment(context, text) {
   const { textOption } = options(context);
   return `${text}  ${textOption !== undefined ? textOption : ''}`;
 }
 
-export function exportStyleguideColors(context, colors) {
+function exportStyleguideColors(context, colors) {
   return generateColorExtension(colors);
 }
 
-export function exportStyleguideTextStyles(context, textStyles) {
+function exportStyleguideTextStyles(context, textStyles) {
   return generateFontExtension(textStyles);
 }
+
+export default {
+  layer,
+  styleguideColors,
+  styleguideTextStyles,
+  exportStyleguideColors,
+  exportStyleguideTextStyles,
+  comment,
+};

@@ -19,11 +19,4 @@ module.exports = {
     }],
   },
   'parser': 'babel-eslint',
-  'settings': {
-    'import/resolver': {
-      'webpack': {
-        'config': path.join(__dirname, 'config/webpack.config.dev.js')
-      }
-    }
-  }
 }
