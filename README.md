@@ -10,7 +10,8 @@
     <img src="https://travis-ci.org/artemnovichkov/zepcode.svg?branch=master" alt="Build Status" />
   </a>
 </p>
-Generates Swift snippets from colors, fonts and layers.
+
+[Zeplin extension](https://extensions.zeplin.io/) that generates Swift snippets from colors, fonts and layers.
 
 ## Features
 
