@@ -1,3 +1,5 @@
+import colorExtensionTemplate from './templates/color-extension';
+
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
 }
@@ -18,33 +20,8 @@ function customUIColor(color) {
 }
 
 export function generateColorExtension(colors, extensionOptions) {
-  let colorsString = '';
-  if (extensionOptions.useCustomColorInitializer) {
-    colorsString += `${' '.repeat(
-      4
-    )}convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) {\n`;
-    colorsString += `${' '.repeat(
-      8
-    )}self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: a)`;
-    colorsString += `\n${' '.repeat(4)}}\n\n`;
-  }
-  colors.forEach(color => {
-    colorsString += `${' '.repeat(4)}static let ${color.name} = `;
-    if (extensionOptions.useCustomColorInitializer) {
-      colorsString += `${customUIColor(color)}`;
-    } else {
-      colorsString += `${uiColor(color)}`;
-    }
-    colorsString += `\n`;
-  });
-
-  let string = 'import UIKit\n\n';
-  string += 'extension UIColor {\n\n';
-  string += colorsString;
-  string += '}';
-
   return {
-    code: string,
+    code: colorExtensionTemplate(colors, extensionOptions),
     mode: 'swift',
     filename: 'UIColor+AppColors.swift',
   };
