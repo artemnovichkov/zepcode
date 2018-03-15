@@ -1,5 +1,5 @@
-import customUiColorTemplate from './custom-ui-color';
-import uiColorTemplate from './ui-color';
+import customColorTemplate from './custom-color';
+import colorTemplate from './color';
 
 /* eslint-disable */
 const colorExtensionTemplate = (colors, extensionOptions) => `
@@ -15,8 +15,8 @@ extension UIColor {
       .map(
         color => `static let ${color.name} = ${
           extensionOptions.useCustomColorInitializer
-            ? customUiColorTemplate(color)
-            : uiColorTemplate(color)
+            ? customColorTemplate(color)
+            : colorTemplate(color)
         }
     `
       )

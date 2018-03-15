@@ -1,22 +1,17 @@
 import colorExtensionTemplate from './templates/color-extension';
+import customColorTemplate from './templates/custom-color';
+import colorTemplate from './templates/color';
 
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
 }
 
 function uiColor(color) {
-  return `UIColor(red: ${color.r}/255, green: ${color.g}/255, blue: ${
-    color.b
-  }/255, alpha: ${color.a})`;
+  return colorTemplate(color);
 }
 
 function customUIColor(color) {
-  let colorString = `UIColor(r: ${color.r}, g: ${color.g}, b: ${color.b}`;
-  if (color.a !== 1) {
-    colorString += `, a: ${color.a}`;
-  }
-  colorString += `)`;
-  return colorString;
+  return customColorTemplate(color);
 }
 
 export function generateColorExtension(colors, extensionOptions) {
