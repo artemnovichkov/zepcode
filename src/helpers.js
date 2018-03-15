@@ -2,6 +2,7 @@ import colorExtensionTemplate from './templates/color-extension';
 import customColorTemplate from './templates/custom-color';
 import colorTemplate from './templates/color';
 import linearGradientTemplate from './templates/linear-gradient';
+import radialGradientTemplate from './templates/radial-gradient';
 
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
@@ -90,63 +91,11 @@ export function linearGradientLayer(gradient, project, extensionOptions) {
 
 export function radialGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
-  let colorStopsString = '';
-  colorStops.forEach((colorStop, index) => {
-    colorStopsString += cgColor(colorStop.color, project, extensionOptions);
-    colorStopsString += `${index !== colorStops.length - 1 ? ', ' : ''}`;
-  });
+  const colorStopsString = colorStops
+    .map(colorStop => cgColor(colorStop.color, project, extensionOptions))
+    .join(', ');
 
-  let string = 'final class RadialGradientView: UIView {\n\n';
-  string += `${' '.repeat(4)}private var radius: CGFloat {\n`;
-  string += `${' '.repeat(8)}return min(bounds.width / 2, bounds.height / 2)\n`;
-  string += `${' '.repeat(4)}}\n\n`;
-  // Colors
-  string += `${' '.repeat(4)}private let colors = [${colorStopsString}]\n\n`;
-
-  // Inits
-  string += `${' '.repeat(4)}override init(frame: CGRect) {\n`;
-  string += `${' '.repeat(8)}super.init(frame: frame)\n`;
-  string += `${' '.repeat(8)}clipsToBounds = true\n`;
-  string += `${' '.repeat(4)}}\n\n`;
-
-  string += `${' '.repeat(4)}required init?(coder aDecoder: NSCoder) {\n`;
-  string += `${' '.repeat(
-    8
-  )}fatalError("init(coder:) has not been implemented")\n`;
-  string += `${' '.repeat(4)}}\n\n`;
-
-  // layoutSubviews
-  string += `${' '.repeat(4)}override func layoutSubviews() {\n`;
-  string += `${' '.repeat(8)}super.layoutSubviews()\n`;
-  string += `${' '.repeat(8)}layer.cornerRadius = radius\n`;
-  string += `${' '.repeat(4)}}\n\n`;
-
-  //  Draw rect
-  string += `${' '.repeat(4)}override func draw(_ rect: CGRect) {\n`;
-  string += `${' '.repeat(8)}let context = UIGraphicsGetCurrentContext()\n\n`;
-  string += `${' '.repeat(8)}let colorSpace = CGColorSpaceCreateDeviceRGB()\n`;
-  string += `${' '.repeat(8)}let colorsCount = colors.count\n`;
-  string += `${' '.repeat(
-    8
-  )}var locations = (0...colorsCount - 1).map { i in\n`;
-  string += `${' '.repeat(12)}return CGFloat(i) / CGFloat(colorsCount)\n`;
-  string += `${' '.repeat(8)}}\n\n`;
-  string += `${' '.repeat(
-    8
-  )}guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: locations) else {\n`;
-  string += `${' '.repeat(12)}return\n`;
-  string += `${' '.repeat(8)}}\n\n`;
-  string += `${' '.repeat(8)}context?.drawRadialGradient(gradient,\n`;
-  string += `${' '.repeat(35)}startCenter: center,\n`;
-  string += `${' '.repeat(35)}startRadius: 0,\n`;
-  string += `${' '.repeat(35)}endCenter: center,\n`;
-  string += `${' '.repeat(35)}endRadius: radius,\n`;
-  string += `${' '.repeat(
-    35
-  )}options: CGGradientDrawingOptions(rawValue: 0))\n`;
-  string += `${' '.repeat(8)}}\n`;
-  string += '}\n';
-  return string;
+  return radialGradientTemplate(colorStopsString);
 }
 
 export default {
