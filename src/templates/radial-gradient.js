@@ -1,6 +1,6 @@
 /* eslint-disable */
-const radialGradientTemplate = colorStopsString =>
-  `import UIKit
+const radialGradientTemplate = colorStopsString => `
+import UIKit
     
 final class RadialGradientView: UIView {
 
@@ -44,7 +44,6 @@ final class RadialGradientView: UIView {
                                     endRadius: radius,
                                     options: CGGradientDrawingOptions(rawValue: 0))
     }
-}
-`;
+}`;
 
 export default radialGradientTemplate;

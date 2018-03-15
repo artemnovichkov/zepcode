@@ -3,6 +3,7 @@ import customColorTemplate from './templates/custom-color';
 import colorTemplate from './templates/color';
 import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
+import fontExtensionTemplate from './templates/font-extension';
 
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
@@ -41,24 +42,17 @@ export function generateFontExtension(textStyles) {
     new Set(textStyles.map(style => style.fontFace))
   ).sort();
 
-  const fonfacesFunctions = uniqueFonts.map(styleName => {
-    let result = '';
-    result += `${' '.repeat(4)}static func ${camelize(
-      styleName
-    )}(ofSize: CGFloat) -> UIFont {\n`;
-    result += `${' '.repeat(8)}`;
-    result += `return UIFont(name: "${styleName}", size: size)!\n`;
-    result += `${' '.repeat(4)}}`;
-    return result;
-  });
-
-  let string = 'import UIKit\n\n';
-  string += 'extension UIFont {\n';
-  string += fonfacesFunctions.join('\n');
-  string += '\n}';
+  const fonfacesFunctions = uniqueFonts
+    .map(
+      styleName => `
+    static func ${camelize(styleName)}(ofSize: CGFloat) -> UIFont {
+        return UIFont(name: "${styleName}", size: size)!
+    }`
+    )
+    .join('\n');
 
   return {
-    code: string,
+    code: fontExtensionTemplate(fonfacesFunctions),
     mode: 'swift',
     filename: 'UIFont+AppFonts.swift',
   };
