@@ -5,17 +5,22 @@ import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
 
-function camelize(str) {
-  return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
+export function cgColorString(color, project, extensionOptions) {
+  const styleguideColor = project.findColorEqual(color);
+  const cgColorPostfix = '.cgColor';
+  if (extensionOptions.useColorNames && styleguideColor) {
+    return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
+  }
+  if (extensionOptions.useCustomColorInitializer) {
+    return customColorTemplate(color) + cgColorPostfix;
+  }
+  return colorTemplate(color) + cgColorPostfix;
 }
 
-function uiColor(color) {
-  return colorTemplate(color);
-}
-
-function customUIColor(color) {
-  return customColorTemplate(color);
-}
+const colorStopsString = (colorStops, project, extensionOptions) =>
+  colorStops
+    .map(colorStop => cgColorString(colorStop.color, project, extensionOptions))
+    .join(', ');
 
 export function generateColorExtension(colors, extensionOptions) {
   return {
@@ -25,34 +30,13 @@ export function generateColorExtension(colors, extensionOptions) {
   };
 }
 
-export function cgColor(color, project, extensionOptions) {
-  const styleguideColor = project.findColorEqual(color);
-  const cgColorPostfix = '.cgColor';
-  if (extensionOptions.useColorNames && styleguideColor) {
-    return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
-  }
-  if (extensionOptions.useCustomColorInitializer) {
-    return customUIColor(color) + cgColorPostfix;
-  }
-  return uiColor(color) + cgColorPostfix;
-}
-
 export function generateFontExtension(textStyles) {
   const uniqueFonts = Array.from(
     new Set(textStyles.map(style => style.fontFace))
   ).sort();
 
-  const fonfacesFunctions = uniqueFonts
-    .map(
-      styleName => `
-    static func ${camelize(styleName)}(ofSize: CGFloat) -> UIFont {
-        return UIFont(name: "${styleName}", size: size)!
-    }`
-    )
-    .join('\n');
-
   return {
-    code: fontExtensionTemplate(fonfacesFunctions),
+    code: fontExtensionTemplate(uniqueFonts),
     mode: 'swift',
     filename: 'UIFont+AppFonts.swift',
   };
@@ -69,32 +53,27 @@ export function options(context) {
 
 export function linearGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
-  const colorStopsString = colorStops
-    .map(colorStop => cgColor(colorStop.color, project, extensionOptions))
-    .join(', ');
   const colorStopsPositionString = colorStops
     .map((colorStop, index) => `${index}`)
     .join(', ');
 
   return linearGradientTemplate(
     gradient,
-    colorStopsString,
+    colorStopsString(colorStops, project, extensionOptions),
     colorStopsPositionString
   );
 }
 
 export function radialGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
-  const colorStopsString = colorStops
-    .map(colorStop => cgColor(colorStop.color, project, extensionOptions))
-    .join(', ');
-
-  return radialGradientTemplate(colorStopsString);
+  return radialGradientTemplate(
+    colorStopsString(colorStops, project, extensionOptions)
+  );
 }
 
 export default {
   generateColorExtension,
-  cgColor,
+  cgColorString,
   generateFontExtension,
   options,
   linearGradientLayer,

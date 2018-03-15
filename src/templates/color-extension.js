@@ -1,8 +1,7 @@
 import customColorTemplate from './custom-color';
 import colorTemplate from './color';
 
-/* eslint-disable */
-const colorExtensionTemplate = (colors, extensionOptions) => `
+const colorExtensionTemplate = (colors, extensionOptions) =>`
 import UIKit
 
 extension UIColor {
@@ -11,16 +10,12 @@ extension UIColor {
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: a)
     }
 
-    ${colors
-      .map(
-        color => `static let ${color.name} = ${
-          extensionOptions.useCustomColorInitializer
-            ? customColorTemplate(color)
-            : colorTemplate(color)
-        }
-    `
-      )
-      .join('')}
+    ${colors.map(color => `static let ${color.name} = ${
+      extensionOptions.useCustomColorInitializer
+        ? customColorTemplate(color)
+        : colorTemplate(color)
+    }
+    `).join('')}
 }
 `;
 
