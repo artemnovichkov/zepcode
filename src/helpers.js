@@ -1,6 +1,7 @@
 import colorExtensionTemplate from './templates/color-extension';
 import customColorTemplate from './templates/custom-color';
 import colorTemplate from './templates/color';
+import linearGradientTemplate from './templates/linear-gradient';
 
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
@@ -72,34 +73,19 @@ export function options(context) {
 }
 
 export function linearGradientLayer(gradient, project, extensionOptions) {
-  let colorStopsString = '';
-  let colorStopsPositionString = '';
   const { colorStops } = gradient;
-  colorStops.forEach((colorStop, index) => {
-    const divideString = `${index !== colorStops.length - 1 ? ', ' : ''}`;
-    colorStopsString += `${cgColor(
-      colorStop.color,
-      project,
-      extensionOptions
-    )}${divideString}`;
-    colorStopsPositionString += `${colorStop.position}${divideString}`;
-  });
+  const colorStopsString = colorStops
+    .map(colorStop => cgColor(colorStop.color, project, extensionOptions))
+    .join(', ');
+  const colorStopsPositionString = colorStops
+    .map((colorStop, index) => `${index}`)
+    .join(', ');
 
-  let string = 'let gradientLayer = CAGradientLayer()\n';
-  string += 'gradientLayer.frame = view.bounds\n';
-  if (gradient.angle === 90) {
-    string += 'gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)\n';
-    string += 'gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)\n';
-  }
-
-  // Colors
-  string += `gradientLayer.colors = [${colorStopsString}]\n`;
-
-  // Locations
-  string += `gradientLayer.locations = [${colorStopsPositionString}]\n`;
-
-  string += 'view.layer.insertSublayer(gradientLayer, at: 0)';
-  return string;
+  return linearGradientTemplate(
+    gradient,
+    colorStopsString,
+    colorStopsPositionString
+  );
 }
 
 export function radialGradientLayer(gradient, project, extensionOptions) {
