@@ -1,6 +1,6 @@
 import {
   generateColorExtension,
-  cgColor,
+  cgColorString,
   generateFontExtension,
   options,
   linearGradientLayer,
@@ -51,7 +51,7 @@ function layer(context, layerParams) {
     string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
     const { color } = border.fill;
     if (color !== undefined) {
-      const borderColorString = cgColor(
+      const borderColorString = cgColorString(
         border.fill.color,
         context.project,
         options(context)
@@ -72,7 +72,7 @@ function layer(context, layerParams) {
     }
     const { color } = shadow;
     if (color) {
-      const shadowColor = cgColor(
+      const shadowColor = cgColorString(
         shadow.color,
         context.project,
         options(context)
