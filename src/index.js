@@ -2,13 +2,13 @@ import {
   generateColorExtension,
   cgColorString,
   generateFontExtension,
-  options,
   linearGradientLayer,
   radialGradientLayer,
 } from './helpers';
+import getOptions from './options';
 
 function styleguideColors(context, colors) {
-  return generateColorExtension(colors, options(context));
+  return generateColorExtension(colors, getOptions(context));
 }
 
 function styleguideTextStyles(context, textStyles) {
@@ -25,14 +25,14 @@ function layer(context, layerParams) {
           string += linearGradientLayer(
             gradient,
             context.project,
-            options(context)
+            getOptions(context)
           );
           break;
         case 'radial':
           string += radialGradientLayer(
             gradient,
             context.project,
-            options(context)
+            getOptions(context)
           );
           break;
         default:
@@ -54,7 +54,7 @@ function layer(context, layerParams) {
       const borderColorString = cgColorString(
         border.fill.color,
         context.project,
-        options(context)
+        getOptions(context)
       );
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
@@ -69,7 +69,7 @@ function layer(context, layerParams) {
       const shadowColor = cgColorString(
         shadow.color,
         context.project,
-        options(context)
+        getOptions(context)
       );
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
@@ -93,7 +93,7 @@ function layer(context, layerParams) {
 }
 
 function comment(context, text) {
-  const { textOption } = options(context);
+  const { textOption } = getOptions(context);
   return `${text}  ${textOption !== undefined ? textOption : ''}`;
 }
 

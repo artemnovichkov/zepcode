@@ -42,15 +42,6 @@ export function generateFontExtension(textStyles) {
   };
 }
 
-export function options(context) {
-  return {
-    useColorNames: context.getOption('use_color_names'),
-    useCustomColorInitializer: context.getOption(
-      'use_custom_color_initializer'
-    ),
-  };
-}
-
 export function linearGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
 
@@ -71,7 +62,6 @@ export default {
   generateColorExtension,
   cgColorString,
   generateFontExtension,
-  options,
   linearGradientLayer,
   radialGradientLayer,
 };
