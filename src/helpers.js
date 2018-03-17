@@ -53,14 +53,10 @@ export function options(context) {
 
 export function linearGradientLayer(gradient, project, extensionOptions) {
   const { colorStops } = gradient;
-  const colorStopsPositionString = colorStops
-    .map((colorStop, index) => `${index}`)
-    .join(', ');
 
   return linearGradientTemplate(
     gradient,
-    colorStopsString(colorStops, project, extensionOptions),
-    colorStopsPositionString
+    colorStopsString(colorStops, project, extensionOptions)
   );
 }
 
