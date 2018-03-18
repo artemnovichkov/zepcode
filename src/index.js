@@ -17,19 +17,23 @@ function styleguideTextStyles(context, textStyles) {
 
 function layer(context, layerParams) {
   let string = '';
+  const newlineBeforeContent = () => (string.length ? '\n\n' : '');
+
   if (layerParams.fills.length) {
     const { gradient } = layerParams.fills[0];
+    let gradientString = '';
+
     if (gradient !== undefined) {
       switch (gradient.type) {
         case 'linear':
-          string += linearGradientLayer(
+          gradientString = linearGradientLayer(
             gradient,
             context.project,
             getOptions(context)
           );
           break;
         case 'radial':
-          string += radialGradientLayer(
+          gradientString = radialGradientLayer(
             gradient,
             context.project,
             getOptions(context)
@@ -39,17 +43,20 @@ function layer(context, layerParams) {
           break;
       }
     }
+    string += gradientString;
   }
-  if (string.length > 0) {
-    string += '\n\n';
-  }
+
   if (layerParams.opacity !== 1) {
-    string += `view.alpha = ${layerParams.opacity.toFixed(2)}\n`;
+    string += `${newlineBeforeContent()}view.alpha = ${layerParams.opacity.toFixed(
+      2
+    )}\n`;
   }
-  if (layerParams.borders.length > 0) {
+
+  if (layerParams.borders.length) {
     const border = layerParams.borders[0];
-    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
     const { color } = border.fill;
+    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
+
     if (color !== undefined) {
       const borderColorString = cgColorString(
         border.fill.color,
@@ -59,13 +66,19 @@ function layer(context, layerParams) {
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
   }
+
   if (layerParams.borderRadius > 0) {
-    string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
+    string += `${newlineBeforeContent()}view.layer.cornerRadius = ${
+      layerParams.borderRadius
+    }`;
   }
-  if (layerParams.shadows.length > 0) {
+
+  if (layerParams.shadows.length) {
     const shadow = layerParams.shadows[0];
     const { color } = shadow;
-    if (color) {
+    string += newlineBeforeContent();
+
+    if (color !== undefined) {
       const shadowColor = cgColorString(
         shadow.color,
         context.project,
@@ -98,7 +111,7 @@ function comment(context, text) {
 }
 
 function exportStyleguideColors(context, colors) {
-  return generateColorExtension(colors, options(context));
+  return generateColorExtension(colors, getOptions(context));
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
