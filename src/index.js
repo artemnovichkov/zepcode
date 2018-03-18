@@ -1,21 +1,15 @@
-import {
-  generateColorExtension,
-  cgColorString,
-  generateFontExtension,
-  linearGradientLayer,
-  radialGradientLayer,
-} from './helpers';
-import getOptions from './options';
+import Zepcode from './zepcode';
 
 function styleguideColors(context, colors) {
-  return generateColorExtension(colors, getOptions(context));
+  return new Zepcode(context).generateColorExtension(colors);
 }
 
 function styleguideTextStyles(context, textStyles) {
-  return generateFontExtension(textStyles);
+  return Zepcode.generateFontExtension(textStyles);
 }
 
 function layer(context, layerParams) {
+  const zepcode = new Zepcode(context);
   let string = '';
   const newlineBeforeContent = () => (string.length ? '\n\n' : '');
 
@@ -26,18 +20,10 @@ function layer(context, layerParams) {
     if (gradient !== undefined) {
       switch (gradient.type) {
         case 'linear':
-          gradientString = linearGradientLayer(
-            gradient,
-            context.project,
-            getOptions(context)
-          );
+          gradientString = zepcode.linearGradientLayer(gradient);
           break;
         case 'radial':
-          gradientString = radialGradientLayer(
-            gradient,
-            context.project,
-            getOptions(context)
-          );
+          gradientString = zepcode.radialGradientLayer(gradient);
           break;
         default:
           break;
@@ -58,11 +44,7 @@ function layer(context, layerParams) {
     string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
 
     if (color !== undefined) {
-      const borderColorString = cgColorString(
-        border.fill.color,
-        context.project,
-        getOptions(context)
-      );
+      const borderColorString = zepcode.cgColorString(border.fill.color);
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
   }
@@ -79,11 +61,7 @@ function layer(context, layerParams) {
     string += newlineBeforeContent();
 
     if (color !== undefined) {
-      const shadowColor = cgColorString(
-        shadow.color,
-        context.project,
-        getOptions(context)
-      );
+      const shadowColor = zepcode.cgColorString(shadow.color);
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
     string += `view.layer.shadowOffset = `;
@@ -106,16 +84,15 @@ function layer(context, layerParams) {
 }
 
 function comment(context, text) {
-  const { textOption } = getOptions(context);
-  return `${text}  ${textOption !== undefined ? textOption : ''}`;
+  return Zepcode.commentString(text);
 }
 
 function exportStyleguideColors(context, colors) {
-  return generateColorExtension(colors, getOptions(context));
+  return new Zepcode(context).generateColorExtension(colors);
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
-  return generateFontExtension(textStyles);
+  return Zepcode.generateFontExtension(textStyles);
 }
 
 export default {
