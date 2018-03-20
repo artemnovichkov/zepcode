@@ -1,15 +1,15 @@
-import Zepcode from './zepcode';
+import zepcode from './zepcode';
 
 function styleguideColors(context, colors) {
-  return new Zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors);
 }
 
 function styleguideTextStyles(context, textStyles) {
-  return Zepcode.generateFontExtension(textStyles);
+  return zepcode(context).generateFontExtension(textStyles);
 }
 
 function layer(context, layerParams) {
-  const zepcode = new Zepcode(context);
+  const zepcodeInstance = zepcode(context);
   let string = '';
   const newlineBeforeContent = () => (string.length ? '\n\n' : '');
 
@@ -20,10 +20,10 @@ function layer(context, layerParams) {
     if (gradient !== undefined) {
       switch (gradient.type) {
         case 'linear':
-          gradientString = zepcode.linearGradientLayer(gradient);
+          gradientString = zepcodeInstance.linearGradientLayer(gradient);
           break;
         case 'radial':
-          gradientString = zepcode.radialGradientLayer(gradient);
+          gradientString = zepcodeInstance.radialGradientLayer(gradient);
           break;
         default:
           break;
@@ -44,7 +44,9 @@ function layer(context, layerParams) {
     string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
 
     if (color !== undefined) {
-      const borderColorString = zepcode.cgColorString(border.fill.color);
+      const borderColorString = zepcodeInstance.cgColorString(
+        border.fill.color
+      );
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
   }
@@ -61,7 +63,7 @@ function layer(context, layerParams) {
     string += newlineBeforeContent();
 
     if (color !== undefined) {
-      const shadowColor = zepcode.cgColorString(shadow.color);
+      const shadowColor = zepcodeInstance.cgColorString(shadow.color);
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
     string += `view.layer.shadowOffset = `;
@@ -84,15 +86,15 @@ function layer(context, layerParams) {
 }
 
 function comment(context, text) {
-  return Zepcode.commentString(text);
+  return zepcode(context).commentString(text);
 }
 
 function exportStyleguideColors(context, colors) {
-  return new Zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors);
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
-  return Zepcode.generateFontExtension(textStyles);
+  return zepcode(context).generateFontExtension(textStyles);
 }
 
 export default {

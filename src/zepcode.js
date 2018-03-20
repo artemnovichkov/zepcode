@@ -5,65 +5,82 @@ import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
 
-export default class Zepcode {
-  constructor(context) {
-    this.options = {
-      useColorNames: context.getOption('use_color_names'),
-      useCustomColorInitializer: context.getOption(
-        'use_custom_color_initializer'
-      ),
+const zepcode = (() => {
+  let instance;
+
+  function init(privateContext) {
+    let me;
+    if (privateContext !== undefined) {
+      me = {
+        options: {
+          useColorNames: privateContext.getOption('use_color_names'),
+          useCustomColorInitializer: privateContext.getOption(
+            'use_custom_color_initializer'
+          ),
+        },
+        project: privateContext.project,
+      };
+    }
+
+    me.cgColorString = color => {
+      const styleguideColor = me.project.findColorEqual(color);
+      const cgColorPostfix = '.cgColor';
+
+      if (me.options.useColorNames && styleguideColor) {
+        return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
+      }
+      if (me.options.useCustomColorInitializer) {
+        return customColorTemplate(color) + cgColorPostfix;
+      }
+      return colorTemplate(color) + cgColorPostfix;
     };
-    this.project = context.project;
-  }
 
-  cgColorString(color) {
-    const styleguideColor = this.project.findColorEqual(color);
-    const cgColorPostfix = '.cgColor';
+    me.colorStopsString = gradient => {
+      const { colorStops } = gradient;
+      return colorStops
+        .map(colorStop => me.cgColorString(colorStop.color))
+        .join(', ');
+    };
 
-    if (this.options.useColorNames && styleguideColor) {
-      return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
-    }
-    if (this.options.useCustomColorInitializer) {
-      return customColorTemplate(color) + cgColorPostfix;
-    }
-    return colorTemplate(color) + cgColorPostfix;
-  }
+    me.linearGradientLayer = gradient =>
+      linearGradientTemplate(gradient, me.colorStopsString(gradient));
 
-  colorStopsString(gradient) {
-    const { colorStops } = gradient;
-    colorStops.map(colorStop => this.cgColorString(colorStop.color)).join(', ');
-  }
+    me.radialGradientLayer = gradient =>
+      radialGradientTemplate(me.colorStopsString(gradient));
 
-  linearGradientLayer(gradient) {
-    return linearGradientTemplate(gradient, this.colorStopsString(gradient));
-  }
+    me.commentString = text => {
+      const { textOption } = me.options;
+      return `${text}  ${textOption !== undefined ? textOption : ''}`;
+    };
 
-  radialGradientLayer(gradient) {
-    return radialGradientTemplate(this.colorStopsString(gradient));
-  }
-
-  commentString(text) {
-    const { textOption } = this.options;
-    return `${text}  ${textOption !== undefined ? textOption : ''}`;
-  }
-
-  generateColorExtension(colors) {
-    return {
-      code: colorExtensionTemplate(colors, this.options),
+    me.generateColorExtension = colors => ({
+      code: colorExtensionTemplate(colors, me.options),
       language: 'swift',
       filename: 'UIColor+AppColors.swift',
+    });
+
+    me.generateFontExtension = textStyles => {
+      const uniqueFonts = Array.from(
+        new Set(textStyles.map(style => style.fontFace))
+      ).sort();
+
+      return {
+        code: fontExtensionTemplate(uniqueFonts),
+        language: 'swift',
+        filename: 'UIFont+AppFonts.swift',
+      };
     };
+
+    return me;
   }
 
-  static generateFontExtension(textStyles) {
-    const uniqueFonts = Array.from(
-      new Set(textStyles.map(style => style.fontFace))
-    ).sort();
+  return context => {
+    if (!instance) {
+      instance = init(context);
+    }
 
-    return {
-      code: fontExtensionTemplate(uniqueFonts),
-      language: 'swift',
-      filename: 'UIFont+AppFonts.swift',
-    };
-  }
-}
+    return instance;
+  };
+})();
+
+export default zepcode;
