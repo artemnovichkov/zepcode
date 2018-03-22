@@ -1,8 +1,7 @@
 import customColorTemplate from './custom-color';
 import colorTemplate from './color';
 
-const colorExtensionTemplate = (colors, extensionOptions) =>`
-import UIKit
+const colorExtensionTemplate = (colors, extensionOptions) =>`import UIKit
 
 extension UIColor {
     ${
