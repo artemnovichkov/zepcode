@@ -98,7 +98,7 @@ function comment(context, text) {
 }
 
 function exportStyleguideColors(context, colors) {
-  return generateColorExtension(colors);
+  return generateColorExtension(colors, options(context));
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
