@@ -25,7 +25,7 @@ const colorStopsString = (colorStops, project, extensionOptions) =>
 export function generateColorExtension(colors, extensionOptions) {
   return {
     code: colorExtensionTemplate(colors, extensionOptions),
-    mode: 'swift',
+    language: 'swift',
     filename: 'UIColor+AppColors.swift',
   };
 }
@@ -37,7 +37,7 @@ export function generateFontExtension(textStyles) {
 
   return {
     code: fontExtensionTemplate(uniqueFonts),
-    mode: 'swift',
+    language: 'swift',
     filename: 'UIFont+AppFonts.swift',
   };
 }

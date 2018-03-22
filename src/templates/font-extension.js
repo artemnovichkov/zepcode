@@ -1,7 +1,6 @@
 import camelizeFilter from '../filters';
 
-const fontExtensionTemplate = uniqueFonts => `
-import UIKit
+const fontExtensionTemplate = uniqueFonts => `import UIKit
 
 extension UIFont {
 ${uniqueFonts.map(styleName => `

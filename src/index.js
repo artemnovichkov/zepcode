@@ -40,10 +40,10 @@ function layer(context, layerParams) {
       }
     }
   }
+  if (string.length > 0) {
+    string += '\n\n';
+  }
   if (layerParams.opacity !== 1) {
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     string += `view.alpha = ${layerParams.opacity.toFixed(2)}\n`;
   }
   if (layerParams.borders.length > 0) {
@@ -60,16 +60,10 @@ function layer(context, layerParams) {
     }
   }
   if (layerParams.borderRadius > 0) {
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
   if (layerParams.shadows.length > 0) {
     const shadow = layerParams.shadows[0];
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     const { color } = shadow;
     if (color) {
       const shadowColor = cgColorString(
@@ -79,9 +73,12 @@ function layer(context, layerParams) {
       );
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
-    string += `view.layer.shadowOffset = CGSize(width: ${
-      shadow.offsetX
-    }, height: ${shadow.offsetY})\n`;
+    string += `view.layer.shadowOffset = `;
+    if (shadow.offsetX && shadow.offsetY) {
+      string += `CGSize(width: ${shadow.offsetX}, height: ${shadow.offsetY})\n`;
+    } else {
+      string += `.zero\n`;
+    }
     string += `view.layer.shadowRadius = ${layerParams.borderRadius}`;
   }
 
@@ -101,7 +98,7 @@ function comment(context, text) {
 }
 
 function exportStyleguideColors(context, colors) {
-  return generateColorExtension(colors);
+  return generateColorExtension(colors, options(context));
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
