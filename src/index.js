@@ -79,9 +79,12 @@ function layer(context, layerParams) {
       );
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
-    string += `view.layer.shadowOffset = CGSize(width: ${
-      shadow.offsetX
-    }, height: ${shadow.offsetY})\n`;
+    string += `view.layer.shadowOffset = `;
+    if (shadow.offsetX && shadow.offsetY) {
+      string += `CGSize(width: ${shadow.offsetX}, height: ${shadow.offsetY})\n`;
+    } else {
+      string += `.zero\n`;
+    }
     string += `view.layer.shadowRadius = ${layerParams.borderRadius}`;
   }
 
