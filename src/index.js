@@ -40,10 +40,10 @@ function layer(context, layerParams) {
       }
     }
   }
+  if (string.length > 0) {
+    string += '\n\n';
+  }
   if (layerParams.opacity !== 1) {
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     string += `view.alpha = ${layerParams.opacity.toFixed(2)}\n`;
   }
   if (layerParams.borders.length > 0) {
@@ -60,16 +60,10 @@ function layer(context, layerParams) {
     }
   }
   if (layerParams.borderRadius > 0) {
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
   if (layerParams.shadows.length > 0) {
     const shadow = layerParams.shadows[0];
-    if (string.length > 0) {
-      string += '\n\n';
-    }
     const { color } = shadow;
     if (color) {
       const shadowColor = cgColorString(
