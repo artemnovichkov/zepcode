@@ -1,7 +1,7 @@
 import zepcode from './zepcode';
 
 function styleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors, false);
 }
 
 function styleguideTextStyles(context, textStyles) {
@@ -89,7 +89,7 @@ function comment(context, text) {
 }
 
 function exportStyleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors, true);
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
