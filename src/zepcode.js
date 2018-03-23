@@ -24,8 +24,9 @@ const zepcode = (() => {
       };
     }
 
-    me.colorString = (color, postfix) => {
+    me.cgColorString = color => {
       const styleguideColor = me.project.findColorEqual(color);
+      const postfix = `.cgColor`;
 
       if (me.options.useColorNames && styleguideColor) {
         return `UIColor.${styleguideColor.name}${postfix}`;
@@ -35,8 +36,6 @@ const zepcode = (() => {
       }
       return colorTemplate(color) + postfix;
     };
-
-    me.cgColorString = color => me.colorString(color, `.cgColor`);
 
     me.colorStopsString = gradient => {
       const { colorStops } = gradient;
@@ -84,11 +83,7 @@ const zepcode = (() => {
     };
 
     me.shadow = shadow => {
-      const color = Object.assign({}, shadow.color);
-      const colorString = me.colorString(
-        color,
-        `.withAlphaComponent(${shadow.color.a}).cgColor`
-      );
+      const colorString = me.cgColorString(shadow.color);
 
       return shadowTemplate(shadow, colorString, me.options);
     };
