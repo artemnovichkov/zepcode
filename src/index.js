@@ -1,7 +1,7 @@
 import zepcode from './zepcode';
 
 function styleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors, false);
 }
 
 function styleguideTextStyles(context, textStyles) {
@@ -11,7 +11,6 @@ function styleguideTextStyles(context, textStyles) {
 function layer(context, layerParams) {
   const zepcodeInstance = zepcode(context);
   let string = '';
-  const newlineBeforeContent = () => (string.length ? '\n\n' : '');
 
   if (layerParams.fills.length) {
     const { gradient } = layerParams.fills[0];
@@ -32,10 +31,13 @@ function layer(context, layerParams) {
     string += gradientString;
   }
 
+  if (string.length) {
+    string += `\n\n`;
+  }
+
   if (layerParams.opacity !== 1) {
-    string += `${newlineBeforeContent()}view.alpha = ${layerParams.opacity.toFixed(
-      2
-    )}\n`;
+    const opacity = Math.round(layerParams.opacity * 100) / 100;
+    string += `view.alpha = ${opacity}\n`;
   }
 
   if (layerParams.borders.length) {
@@ -52,15 +54,12 @@ function layer(context, layerParams) {
   }
 
   if (layerParams.borderRadius > 0) {
-    string += `${newlineBeforeContent()}view.layer.cornerRadius = ${
-      layerParams.borderRadius
-    }`;
+    string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
 
   if (layerParams.shadows.length) {
     const shadow = layerParams.shadows[0];
     const { color } = shadow;
-    string += newlineBeforeContent();
 
     if (color !== undefined) {
       const shadowColor = zepcodeInstance.cgColorString(shadow.color);
@@ -90,7 +89,7 @@ function comment(context, text) {
 }
 
 function exportStyleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors);
+  return zepcode(context).generateColorExtension(colors, true);
 }
 
 function exportStyleguideTextStyles(context, textStyles) {

@@ -4,6 +4,7 @@ import colorTemplate from './templates/color';
 import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
+import headerTemplate from './templates/header';
 
 const zepcode = (() => {
   let instance;
@@ -53,11 +54,20 @@ const zepcode = (() => {
       return `${text}  ${textOption !== undefined ? textOption : ''}`;
     };
 
-    me.generateColorExtension = colors => ({
-      code: colorExtensionTemplate(colors, me.options),
-      language: 'swift',
-      filename: 'UIColor+AppColors.swift',
-    });
+    me.generateColorExtension = (colors, needHeader) => {
+      const fileName = 'UIColor+AppColors.swift';
+      let string = '';
+      if (needHeader) {
+        string += headerTemplate(fileName, me.project.name);
+        string += '\n\n';
+      }
+      string += colorExtensionTemplate(colors, needHeader, me.options);
+      return {
+        code: string,
+        language: 'swift',
+        filename: fileName,
+      };
+    };
 
     me.generateFontExtension = textStyles => {
       const uniqueFonts = Array.from(
