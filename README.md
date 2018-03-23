@@ -35,8 +35,11 @@
 
   extension UIColor {
 
-      convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) {
-          self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: a)
+      convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) { // swiftlint:disable:this identifier_name
+          self.init(red: CGFloat(red) / 255, 
+                    green: CGFloat(green) / 255, 
+                    blue: CGFloat(blue) / 255, 
+                    alpha: a)
       }
 
       static let electricBlue = UIColor(r: 0, g: 86, b: 255)
