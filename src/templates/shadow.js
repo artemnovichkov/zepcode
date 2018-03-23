@@ -10,7 +10,7 @@ view.layer.shadowOffset = ${
 view.layer.shadowRadius = ${shadow.blurRadius} / 2
 ${
     shadow.spread > 0
-    ? `let rect = bounds.insetBy(dx: ${-shadow.spread}, dy: ${-shadow.spread})
+    ? `let rect = view.bounds.insetBy(dx: ${-shadow.spread}, dy: ${-shadow.spread})
 view.layer.shadowPath = UIBezierPath(rect: rect).cgPath`
     : `view.layer.shadowPath = nil`}`;
 
