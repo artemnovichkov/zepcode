@@ -5,6 +5,7 @@ import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
 import headerTemplate from './templates/header';
+import shadowTemplate from './templates/shadow';
 
 const zepcode = (() => {
   let instance;
@@ -23,18 +24,19 @@ const zepcode = (() => {
       };
     }
 
-    me.cgColorString = color => {
+    me.colorString = (color, postfix) => {
       const styleguideColor = me.project.findColorEqual(color);
-      const cgColorPostfix = '.cgColor';
 
       if (me.options.useColorNames && styleguideColor) {
-        return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
+        return `UIColor.${styleguideColor.name}${postfix}`;
       }
       if (me.options.useCustomColorInitializer) {
-        return customColorTemplate(color) + cgColorPostfix;
+        return customColorTemplate(color) + postfix;
       }
-      return colorTemplate(color) + cgColorPostfix;
+      return colorTemplate(color) + postfix;
     };
+
+    me.cgColorString = color => me.colorString(color, `.cgColor`);
 
     me.colorStopsString = gradient => {
       const { colorStops } = gradient;
@@ -79,6 +81,16 @@ const zepcode = (() => {
         language: 'swift',
         filename: 'UIFont+AppFonts.swift',
       };
+    };
+
+    me.shadow = shadow => {
+      const color = Object.assign({}, shadow.color);
+      const colorString = me.colorString(
+        color,
+        `.withAlphaComponent(${shadow.color.a}).cgColor`
+      );
+
+      return shadowTemplate(shadow, colorString, me.options);
     };
 
     return me;
