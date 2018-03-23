@@ -1,76 +1,69 @@
-import {
-  generateColorExtension,
-  cgColorString,
-  generateFontExtension,
-  options,
-  linearGradientLayer,
-  radialGradientLayer,
-} from './helpers';
+import zepcode from './zepcode';
 
 function styleguideColors(context, colors) {
-  return generateColorExtension(colors, options(context));
+  return zepcode(context).generateColorExtension(colors);
 }
 
 function styleguideTextStyles(context, textStyles) {
-  return generateFontExtension(textStyles);
+  return zepcode(context).generateFontExtension(textStyles);
 }
 
 function layer(context, layerParams) {
+  const zepcodeInstance = zepcode(context);
   let string = '';
+  const newlineBeforeContent = () => (string.length ? '\n\n' : '');
+
   if (layerParams.fills.length) {
     const { gradient } = layerParams.fills[0];
+    let gradientString = '';
+
     if (gradient !== undefined) {
       switch (gradient.type) {
         case 'linear':
-          string += linearGradientLayer(
-            gradient,
-            context.project,
-            options(context)
-          );
+          gradientString = zepcodeInstance.linearGradientLayer(gradient);
           break;
         case 'radial':
-          string += radialGradientLayer(
-            gradient,
-            context.project,
-            options(context)
-          );
+          gradientString = zepcodeInstance.radialGradientLayer(gradient);
           break;
         default:
           break;
       }
     }
+    string += gradientString;
   }
-  if (string.length > 0) {
-    string += '\n\n';
-  }
+
   if (layerParams.opacity !== 1) {
-    string += `view.alpha = ${layerParams.opacity.toFixed(2)}\n`;
+    string += `${newlineBeforeContent()}view.alpha = ${layerParams.opacity.toFixed(
+      2
+    )}\n`;
   }
-  if (layerParams.borders.length > 0) {
+
+  if (layerParams.borders.length) {
     const border = layerParams.borders[0];
-    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
     const { color } = border.fill;
+    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
+
     if (color !== undefined) {
-      const borderColorString = cgColorString(
-        border.fill.color,
-        context.project,
-        options(context)
+      const borderColorString = zepcodeInstance.cgColorString(
+        border.fill.color
       );
       string += `view.layer.borderColor = ${borderColorString}\n`;
     }
   }
+
   if (layerParams.borderRadius > 0) {
-    string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
+    string += `${newlineBeforeContent()}view.layer.cornerRadius = ${
+      layerParams.borderRadius
+    }`;
   }
-  if (layerParams.shadows.length > 0) {
+
+  if (layerParams.shadows.length) {
     const shadow = layerParams.shadows[0];
     const { color } = shadow;
-    if (color) {
-      const shadowColor = cgColorString(
-        shadow.color,
-        context.project,
-        options(context)
-      );
+    string += newlineBeforeContent();
+
+    if (color !== undefined) {
+      const shadowColor = zepcodeInstance.cgColorString(shadow.color);
       string += `view.layer.shadowColor = ${shadowColor}\n`;
     }
     string += `view.layer.shadowOffset = `;
@@ -93,16 +86,15 @@ function layer(context, layerParams) {
 }
 
 function comment(context, text) {
-  const { textOption } = options(context);
-  return `${text}  ${textOption !== undefined ? textOption : ''}`;
+  return zepcode(context).commentString(text);
 }
 
 function exportStyleguideColors(context, colors) {
-  return generateColorExtension(colors, options(context));
+  return zepcode(context).generateColorExtension(colors);
 }
 
 function exportStyleguideTextStyles(context, textStyles) {
-  return generateFontExtension(textStyles);
+  return zepcode(context).generateFontExtension(textStyles);
 }
 
 export default {

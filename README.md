@@ -89,15 +89,7 @@
 
   <details><summary>Linear gradient example</summary>
 
-  ```swift
-  let gradientLayer = CAGradientLayer()
-  gradientLayer.frame = view.bounds
-  gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-  gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-  gradientLayer.colors = [UIColor.lightishRed.cgColor, UIColor.barbiePink.cgColor]
-  gradientLayer.locations = [0, 1]
-  view.layer.insertSublayer(gradientLayer, at: 0)
-  ```
+   Check out [LinearGradientPlayground](.github/LinearGradientPlayground.zip) and read explanation of the implementation [here](https://github.com/artemnovichkov/zepcode/issues/1#issuecomment-370118449).
 
   </details>
    <details><summary>Radial gradient example</summary>
