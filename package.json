@@ -1,6 +1,6 @@
 {
   "name": "zepcode",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Generates Swift snippets from colors, fonts and layers.",
   "lint-staged": {
     "src/**/*.{js,json}": [
@@ -66,6 +66,12 @@
         "name": "Use custom color initializer",
         "type": "switch",
         "id": "use_custom_color_initializer",
+        "default": false
+      },
+      {
+        "name": "Use layer extension for shadows",
+        "type": "switch",
+        "id": "use_layer_shadow_extension",
         "default": false
       }
     ]

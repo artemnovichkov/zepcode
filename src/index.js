@@ -59,19 +59,7 @@ function layer(context, layerParams) {
 
   if (layerParams.shadows.length) {
     const shadow = layerParams.shadows[0];
-    const { color } = shadow;
-
-    if (color !== undefined) {
-      const shadowColor = zepcodeInstance.cgColorString(shadow.color);
-      string += `view.layer.shadowColor = ${shadowColor}\n`;
-    }
-    string += `view.layer.shadowOffset = `;
-    if (shadow.offsetX && shadow.offsetY) {
-      string += `CGSize(width: ${shadow.offsetX}, height: ${shadow.offsetY})\n`;
-    } else {
-      string += `.zero\n`;
-    }
-    string += `view.layer.shadowRadius = ${layerParams.borderRadius}`;
+    string += zepcodeInstance.shadow(shadow);
   }
 
   let result = {};

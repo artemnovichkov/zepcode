@@ -153,6 +153,34 @@ Use color names from Color Palette or default `UIColor(red:green:blue:alpha:)` i
 #### Use custom color initializer
 Use `UIColor(r:g:b:a:)` initializer.
 
+#### Use layer extension for shadows
+Use this function for shadow parameters. Don't forget to add this extension to your project.
+
+```swift
+import UIKit
+
+extension CALayer {
+
+    func makeShadow(color: UIColor,
+                    x: CGFloat = 0,
+                    y: CGFloat = 0,
+                    blur: CGFloat = 0,
+                    spread: CGFloat = 0) {
+        shadowColor = color.cgColor
+        shadowOpacity = 1
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / 2
+        if spread == 0 {
+            shadowPath = nil
+        }
+        else {
+            let rect = bounds.insetBy(dx: -spread, dy: -spread)
+            shadowPath = UIBezierPath(rect: rect).cgPath
+        }
+    }
+}
+```
+
 ## How to Install
 
 Download and unzip [the latest release](https://github.com/artemnovichkov/zepcode/releases/).
