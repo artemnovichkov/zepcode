@@ -4,9 +4,9 @@ const fontExtensionTemplate = uniqueFonts => `import UIKit
 
 extension UIFont {
 ${uniqueFonts.map(styleName => `
-  static func ${camelizeFilter(styleName)}(ofSize: CGFloat) -> UIFont {
-      return UIFont(name: "${styleName}", size: size)!
-  }`
+    static func ${camelizeFilter(styleName)}(ofSize: CGFloat) -> UIFont {
+        return UIFont(name: "${styleName}", size: size)!
+    }`
 ).join('\n')}
 }`;
 
