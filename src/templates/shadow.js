@@ -1,7 +1,7 @@
 import customColorTemplate from './custom-color';
 import colorTemplate from './color';
 
-const shadowTemplate = (shadow, colorString, extensionOptions) => `view.layer.shadowColor = ${colorString}
+const shadowTemplate = (shadow, colorString) => `view.layer.shadowColor = ${colorString}
 view.layer.shadowOpacity = 1
 view.layer.shadowOffset = ${
     shadow.offsetX || shadow.offsetY

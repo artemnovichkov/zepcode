@@ -6,6 +6,7 @@ import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
 import headerTemplate from './templates/header';
 import shadowTemplate from './templates/shadow';
+import customShadowTemplate from './templates/custom-shadow';
 
 const zepcode = (() => {
   let instance;
@@ -19,14 +20,16 @@ const zepcode = (() => {
           useCustomColorInitializer: privateContext.getOption(
             'use_custom_color_initializer'
           ),
+          useLayerShadowExtension: privateContext.getOption(
+            'use_layer_shadow_extension'
+          ),
         },
         project: privateContext.project,
       };
     }
 
-    me.cgColorString = color => {
+    me.colorString = (color, postfix) => {
       const styleguideColor = me.project.findColorEqual(color);
-      const postfix = `.cgColor`;
 
       if (me.options.useColorNames && styleguideColor) {
         return `UIColor.${styleguideColor.name}${postfix}`;
@@ -36,6 +39,8 @@ const zepcode = (() => {
       }
       return colorTemplate(color) + postfix;
     };
+
+    me.cgColorString = color => me.colorString(color, `.cgColor`);
 
     me.colorStopsString = gradient => {
       const { colorStops } = gradient;
@@ -83,9 +88,12 @@ const zepcode = (() => {
     };
 
     me.shadow = shadow => {
+      if (me.options.useLayerShadowExtension) {
+        const colorString = me.colorString(shadow.color, ``);
+        return customShadowTemplate(shadow, colorString);
+      }
       const colorString = me.cgColorString(shadow.color);
-
-      return shadowTemplate(shadow, colorString, me.options);
+      return shadowTemplate(shadow, colorString);
     };
 
     return me;

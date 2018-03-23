@@ -67,6 +67,12 @@
         "type": "switch",
         "id": "use_custom_color_initializer",
         "default": false
+      },
+      {
+        "name": "Use layer extension for shadows",
+        "type": "switch",
+        "id": "use_layer_shadow_extension",
+        "default": false
       }
     ]
   }
