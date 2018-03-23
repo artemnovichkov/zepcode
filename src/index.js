@@ -33,9 +33,8 @@ function layer(context, layerParams) {
   }
 
   if (layerParams.opacity !== 1) {
-    string += `${newlineBeforeContent()}view.alpha = ${layerParams.opacity.toFixed(
-      2
-    )}\n`;
+    const opacity = Math.round(layerParams.opacity * 100) / 100;
+    string += `${newlineBeforeContent()}view.alpha = ${opacity}\n`;
   }
 
   if (layerParams.borders.length) {
