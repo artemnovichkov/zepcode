@@ -81,9 +81,12 @@
   <details><summary>Example</summary>
 
   ```swift
-  view.layer.shadowColor = UIColor.black8.cgColor
-  view.layer.shadowOffset = CGSize(width: 0, height: 4)
-  view.layer.shadowRadius = 8
+  view.layer.shadowColor = UIColor(r: 0, g: 0, b: 0, a: 0.5).cgColor
+  view.layer.shadowOpacity = 1
+  view.layer.shadowOffset = CGSize(width: 0, height: 2)
+  view.layer.shadowRadius = 4 / 2
+  let rect = view.bounds.insetBy(dx: -2, dy: -2)
+  view.layer.shadowPath = UIBezierPath(rect: rect).cgPath
   ```
 
   </details>
@@ -183,8 +186,12 @@ extension CALayer {
 
 ## How to Install
 
-Download and unzip [the latest release](https://github.com/artemnovichkov/zepcode/releases/).
-Follow the instruction from official [tutorial](https://github.com/zeplin/zeplin-extension-documentation/blob/master/tutorial.md#adding-a-local-extension).
+- Download and unzip [the latest release](https://github.com/artemnovichkov/zepcode/releases/download/0.5.4/zepcode.zip)
+- During the beta, to debug and work with your extensions, you can add them to your Zeplin projects locally from their Extensions window. On the Mac app, holding down the Option key will enable the “Add Local Extension” option on the title bar:
+![Add local extension](.github/install.png)
+- Enter the path to `manifest.json` and click Add.
+
+That's pretty much it. Go ahead, click a layer!
 
 ## How to make a changes
 
