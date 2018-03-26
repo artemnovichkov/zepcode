@@ -37,29 +37,29 @@ function layer(context, layerParams) {
 
   if (layerParams.opacity !== 1) {
     const opacity = Math.round(layerParams.opacity * 100) / 100;
-    string += `view.alpha = ${opacity}\n`;
+    string += `view.alpha = ${opacity}`;
   }
 
   if (layerParams.borders.length) {
     const border = layerParams.borders[0];
     const { color } = border.fill;
-    string += `view.layer.borderWidth = ${border.thickness.toString()}\n`;
+    string += `\nview.layer.borderWidth = ${border.thickness.toString()}`;
 
     if (color !== undefined) {
       const borderColorString = zepcodeInstance.cgColorString(
         border.fill.color
       );
-      string += `view.layer.borderColor = ${borderColorString}\n`;
+      string += `\nview.layer.borderColor = ${borderColorString}`;
     }
   }
 
   if (layerParams.borderRadius > 0) {
-    string += `view.layer.cornerRadius = ${layerParams.borderRadius}`;
+    string += `\nview.layer.cornerRadius = ${layerParams.borderRadius}`;
   }
 
   if (layerParams.shadows.length) {
     const shadow = layerParams.shadows[0];
-    string += zepcodeInstance.shadow(shadow);
+    string += `\n${zepcodeInstance.shadow(shadow)}`;
   }
 
   let result = {};
