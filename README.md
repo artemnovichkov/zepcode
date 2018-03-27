@@ -157,7 +157,7 @@ Use color names from Color Palette or default `UIColor(red:green:blue:alpha:)` i
 Use `UIColor(r:g:b:a:)` initializer.
 
 #### Use layer extension for shadows
-Use a function below for shadow parameters. Don't forget to add this extension to your project.
+Use a function below for shadow parameters. Don't forget to add [this extension](.github/CALayer+Shadow.swift) to your project.
 
 ```swift
 import UIKit
