@@ -186,12 +186,7 @@ extension CALayer {
 
 ## How to Install
 
-- Download and unzip [the latest release](https://github.com/artemnovichkov/zepcode/releases/download/0.5.4/zepcode.zip)
-- During the beta, to debug and work with your extensions, you can add them to your Zeplin projects locally from their Extensions window. On the Mac app, holding down the Option key will enable the “Add Local Extension” option on the title bar:
-![Add local extension](.github/install.png)
-- Enter the path to `manifest.json` and click Add.
-
-That's pretty much it. Go ahead, click a layer!
+Zepcode is available on [Zeplin Extensions](extensions.zeplin.io).
 
 ## How to make a changes
 
