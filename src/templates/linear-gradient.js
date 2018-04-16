@@ -65,25 +65,24 @@ final class LinearGradientLayer: CALayer {
 
 final class GradientView: UIView {
 
-    lazy var gradientLayer: LinearGradientLayer = {
-        let gradientLayer = LinearGradientLayer()
-        gradientLayer.colors = [${colorStopsString}]
-        return gradientLayer
-    }()
+    lazy var gradientLayer = layer as! LinearGradientLayer
+
+    override class var layerClass: AnyClass {
+        return LinearGradientLayer.self
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.insertSublayer(gradientLayer, at: 0)
+        configure()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.insertSublayer(gradientLayer, at: 0)
+        configure()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradientLayer.frame = bounds
+    func configure() {
+        gradientLayer.colors = [${colorStopsString}]
     }
 }`;
 
