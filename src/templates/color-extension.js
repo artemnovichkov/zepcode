@@ -6,10 +6,10 @@ const colorExtensionTemplate = (colors, needHeader, extensionOptions) =>`import 
 extension UIColor {
 ${
     extensionOptions.useCustomColorInitializer
-    ? `\n    convenience init(r red: Int, g green: Int, b blue: Int, a: CGFloat = 1) { // swiftlint:disable:this identifier_name
-        self.init(red: CGFloat(red) / 255,
-                  green: CGFloat(green) / 255,
-                  blue: CGFloat(blue) / 255,
+    ? `\n    convenience init(r: Int, g: Int, b: Int, a: CGFloat = 1) { // swiftlint:disable:this identifier_name
+        self.init(red: CGFloat(r) / 255,
+                  green: CGFloat(g) / 255,
+                  blue: CGFloat(b) / 255,
                   alpha: a)
     }\n`
 	  : ``}
