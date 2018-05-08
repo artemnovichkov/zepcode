@@ -202,7 +202,7 @@ Next, install project dependencies:
 ```bash
 npm i
 ```
-  
+
 To start developing, to make a build or to execute some functions from extension follow this [guide](https://github.com/zeplin/zem#scripts).
 
 To learn more about zem, [see documentation](https://github.com/zeplin/zem).
