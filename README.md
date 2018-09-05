@@ -95,7 +95,7 @@
 
   <details><summary>Linear gradient example</summary>
 
-   Check out [LinearGradientPlayground](.github/LinearGradientPlayground.zip) and read explanation of the implementation [here](https://github.com/artemnovichkov/zepcode/issues/1#issuecomment-370118449).
+   Check out [LinearGradientPlayground](.github/LinearGradientPlayground.playground.zip) and read explanation of the implementation [here](https://github.com/artemnovichkov/zepcode/issues/1#issuecomment-370118449).
 
   </details>
    <details><summary>Radial gradient example</summary>
