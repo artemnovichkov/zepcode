@@ -1,4 +1,5 @@
 import customColorTemplate from './custom-color';
+import literalColorTemplate from './literal-color';
 import colorTemplate from './color';
 
 const colorExtensionTemplate = (colors, needHeader, extensionOptions) =>`import UIKit
@@ -16,7 +17,9 @@ ${
     ${colors.map(color => `static let ${color.name} = ${
       extensionOptions.useCustomColorInitializer
         ? customColorTemplate(color)
-        : colorTemplate(color)
+        : extensionOptions.useColorLiterals
+          ? literalColorTemplate(color)
+          : colorTemplate(color)
     }`).join('\n    ')}
 }
 `;

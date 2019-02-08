@@ -20,6 +20,7 @@ const zepcode = (() => {
           useCustomColorInitializer: privateContext.getOption(
             'use_custom_color_initializer'
           ),
+          useColorLiterals: privateContext.getOption('use_color_literals'),
           useLayerShadowExtension: privateContext.getOption(
             'use_layer_shadow_extension'
           ),
