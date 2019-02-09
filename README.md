@@ -46,6 +46,17 @@
   }
   ```
   </details>
+  <details><summary>Example with color literals</summary>
+
+  ```swift
+  import UIKit
+
+  extension UIColor {
+
+      static let electricBlue = #colorLiteral(red: 0, green: 0.337254902, blue: 1, alpha: 1)
+  }
+  ```
+  </details>
 
 - ✏️ Fonts for iOS
 
@@ -155,6 +166,9 @@ Use color names from Color Palette or default `UIColor(red:green:blue:alpha:)` i
 
 #### Use custom color initializer
 Use `UIColor(r:g:b:a:)` initializer.
+
+### Use color literals
+Use color literals that will appear in Xcode as a colored rect that presents a color picker.
 
 #### Use layer extension for shadows
 Use a function below for shadow parameters. Don't forget to add [this extension](.github/CALayer+Shadow.swift) to your project.
