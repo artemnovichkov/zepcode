@@ -47,7 +47,7 @@
     {
       "name": "Adam Swinden",
 	  "email": "me@swinden.com",
-	  "url": "https://github.com/AdamSwinden"
+	    "url": "https://github.com/AdamSwinden"
     }],
   "license": "MIT",
   "bugs": {
