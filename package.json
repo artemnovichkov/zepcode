@@ -68,16 +68,24 @@
         "default": true
       },
       {
-        "name": "Use custom color initializer",
-        "type": "switch",
-        "id": "use_custom_color_initializer",
-        "default": false
-      },
-      {
-        "name": "Use color literals",
-        "type": "switch",
-        "id": "use_color_literals",
-        "default": false
+        "name": "Initializer style",
+        "type": "picker",
+        "id": "initializer_style",
+        "default": "default",
+        "options": [
+        	{
+        		"name": "Default",
+        		"value": "default"
+        	},
+        	{
+        		"name": "Custom",
+        		"value": "custom"
+        	},
+        	{
+                "name": "Literal",
+        		"value": "literal"
+        	}
+        ]
       },
       {
         "name": "Use layer extension for shadows",

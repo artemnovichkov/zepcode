@@ -17,10 +17,7 @@ const zepcode = (() => {
       me = {
         options: {
           useColorNames: privateContext.getOption('use_color_names'),
-          useCustomColorInitializer: privateContext.getOption(
-            'use_custom_color_initializer'
-          ),
-          useColorLiterals: privateContext.getOption('use_color_literals'),
+          initializerStyle: privateContext.getOption('initializer_style'),
           useLayerShadowExtension: privateContext.getOption(
             'use_layer_shadow_extension'
           ),
@@ -35,7 +32,7 @@ const zepcode = (() => {
       if (me.options.useColorNames && styleguideColor) {
         return `UIColor.${styleguideColor.name}${postfix}`;
       }
-      if (me.options.useCustomColorInitializer) {
+      if (me.options.initializerStyle === 'custom') {
         return customColorTemplate(color) + postfix;
       }
       return colorTemplate(color) + postfix;

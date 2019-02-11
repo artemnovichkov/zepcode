@@ -164,11 +164,11 @@
 #### Use color names
 Use color names from Color Palette or default `UIColor(red:green:blue:alpha:)` initializers.
 
-#### Use custom color initializer
-Use `UIColor(r:g:b:a:)` initializer.
+#### Initializer style
 
-### Use color literals
-Use color literals that will appear in Xcode as a colored rect that presents a color picker.
+* **Default** — Use the default `UIColor(red:green:blue:alpha:)` initializer.
+* **Custom** — Use `UIColor(r:g:b:a:)` initializer.
+* **Literal** — Use color literals `#colorLiteral(red:green:blue:alpha:)` that will appear in Xcode as a colored rect that presents a color picker.
 
 #### Use layer extension for shadows
 Use a function below for shadow parameters. Don't forget to add [this extension](.github/CALayer+Shadow.swift) to your project.
