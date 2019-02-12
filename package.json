@@ -38,11 +38,17 @@
     "email": "novichkoff93@gmail.com",
     "url": "http://github.com/artemnovichkov"
   },
-  "contributors": [{
-    "name": "Pavel Baybara",
-    "email": "baybara.pavel@gmail.com",
-    "url": "https://github.com/baybara-pavel"
-  }],
+  "contributors": [
+    {
+      "name": "Pavel Baybara",
+      "email": "baybara.pavel@gmail.com",
+      "url": "https://github.com/baybara-pavel"
+    },
+    {
+      "name": "Adam Swinden",
+	  "email": "me@swinden.com",
+	    "url": "https://github.com/AdamSwinden"
+    }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/artemnovichkov/zepcode/issues"
@@ -53,7 +59,6 @@
     "projectTypes": [
       "ios"
     ],
-
     "repository": "http://github.com/artemnovichkov/zepcode",
     "options": [
       {
@@ -63,10 +68,24 @@
         "default": true
       },
       {
-        "name": "Use custom color initializer",
-        "type": "switch",
-        "id": "use_custom_color_initializer",
-        "default": false
+        "name": "Initializer style",
+        "type": "picker",
+        "id": "initializer_style",
+        "default": "default",
+        "options": [
+        	{
+        		"name": "Default",
+        		"value": "default"
+        	},
+        	{
+        		"name": "Custom",
+        		"value": "custom"
+        	},
+        	{
+                "name": "Literal",
+        		"value": "literal"
+        	}
+        ]
       },
       {
         "name": "Use layer extension for shadows",

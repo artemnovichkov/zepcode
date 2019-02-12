@@ -11,7 +11,7 @@ export function cgColorString(color, project, extensionOptions) {
   if (extensionOptions.useColorNames && styleguideColor) {
     return `UIColor.${styleguideColor.name}${cgColorPostfix}`;
   }
-  if (extensionOptions.useCustomColorInitializer) {
+  if (extensionOptions.initializerStyle === 'custom') {
     return customColorTemplate(color) + cgColorPostfix;
   }
   return colorTemplate(color) + cgColorPostfix;
