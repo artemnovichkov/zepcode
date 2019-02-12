@@ -50,8 +50,8 @@
     },
     {
       "name": "Adam Swinden",
-	  "email": "me@swinden.com",
-	  "url": "https://github.com/AdamSwinden"
+	    "email": "me@swinden.com",
+	    "url": "https://github.com/AdamSwinden"
     }],
   "license": "MIT",
   "bugs": {
@@ -86,7 +86,7 @@
         		"value": "custom"
         	},
         	{
-                "name": "Literal",
+            "name": "Literal",
         		"value": "literal"
         	}
         ]
