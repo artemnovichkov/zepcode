@@ -18,9 +18,9 @@
     "publish": "zem publish"
   },
   "husky": {
-  	"hooks": {
-  	  "precommit": "lint-staged"
-  	}
+    "hooks": {
+      "precommit": "lint-staged"
+    }
   },
   "dependencies": {
     "zem": "^0.3.5"
@@ -51,9 +51,10 @@
     },
     {
       "name": "Adam Swinden",
-	    "email": "me@swinden.com",
-	    "url": "https://github.com/AdamSwinden"
-    }],
+      "email": "me@swinden.com",
+      "url": "https://github.com/AdamSwinden"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/artemnovichkov/zepcode/issues"
@@ -78,18 +79,18 @@
         "id": "initializer_style",
         "default": "default",
         "options": [
-        	{
-        		"name": "Default",
-        		"value": "default"
-        	},
-        	{
-        		"name": "Custom",
-        		"value": "custom"
-        	},
-        	{
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Custom",
+            "value": "custom"
+          },
+          {
             "name": "Literal",
-        		"value": "literal"
-        	}
+            "value": "literal"
+          }
         ]
       },
       {
