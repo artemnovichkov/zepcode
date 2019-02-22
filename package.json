@@ -14,7 +14,8 @@
     "clean": "zem clean",
     "exec": "zem exec",
     "test:lint": "eslint --ext=js .",
-    "test": "run-s test:**"
+    "test": "run-s test:**",
+    "publish": "zem publish"
   },
   "husky": {
   	"hooks": {
