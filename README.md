@@ -106,7 +106,7 @@
 
   <details><summary>Linear gradient example</summary>
 
-   Check out [LinearGradientPlayground](.github/LinearGradientPlayground.playground.zip) and read explanation of the implementation [here](https://github.com/artemnovichkov/zepcode/issues/1#issuecomment-370118449).
+   Check out [LinearGradientPlayground](.github/LinearGradientPlayground.playground) and read explanation of the implementation [here](https://github.com/artemnovichkov/zepcode/issues/1#issuecomment-370118449).
 
   </details>
    <details><summary>Radial gradient example</summary>
@@ -119,6 +119,10 @@
       }
 
       private let colors = [UIColor.red.cgColor, UIColor.neonGreen.cgColor]
+
+      var options: CGGradientDrawingOptions = CGGradientDrawingOptions(rawValue: 0)
+
+      // MARK: - Lifecycle
 
       override init(frame: CGRect) {
           super.init(frame: frame)
@@ -139,7 +143,7 @@
 
           let colorSpace = CGColorSpaceCreateDeviceRGB()
           let colorsCount = colors.count
-          var locations = (0...colorsCount - 1).map { i in
+          var locations = (0..<colorsCount).map { i in
               return CGFloat(i) / CGFloat(colorsCount)
           }
 
@@ -152,7 +156,7 @@
                                      startRadius: 0,
                                      endCenter: center,
                                      endRadius: radius,
-                                     options: CGGradientDrawingOptions(rawValue: 0))
+                                     options: options)
           }
   }
   ```

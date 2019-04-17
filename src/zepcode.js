@@ -1,6 +1,5 @@
+import colorString from './templates/color';
 import colorExtensionTemplate from './templates/color-extension';
-import customColorTemplate from './templates/custom-color';
-import colorTemplate from './templates/color';
 import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
 import fontExtensionTemplate from './templates/font-extension';
@@ -26,24 +25,21 @@ const zepcode = (() => {
       };
     }
 
-    me.colorString = (color, postfix) => {
+    me.formattedColorString = (color, postfix = '') => {
       const styleguideColor = me.project.findColorEqual(color);
 
       if (me.options.useColorNames && styleguideColor) {
         return `UIColor.${styleguideColor.name}${postfix}`;
       }
-      if (me.options.initializerStyle === 'custom') {
-        return customColorTemplate(color) + postfix;
-      }
-      return colorTemplate(color) + postfix;
+      return colorString(me.options.initializerStyle, color);
     };
 
-    me.cgColorString = color => me.colorString(color, `.cgColor`);
+    me.cgColorString = color => me.formattedColorString(color, `.cgColor`);
 
     me.colorStopsString = gradient => {
       const { colorStops } = gradient;
       return colorStops
-        .map(colorStop => me.cgColorString(colorStop.color))
+        .map(colorStop => me.formattedColorString(colorStop.color))
         .join(', ');
     };
 
@@ -87,11 +83,11 @@ const zepcode = (() => {
 
     me.shadow = shadow => {
       if (me.options.useLayerShadowExtension) {
-        const colorString = me.colorString(shadow.color, ``);
-        return customShadowTemplate(shadow, colorString);
+        const formattedColorString = me.formattedColorString(shadow.color, ``);
+        return customShadowTemplate(shadow, formattedColorString);
       }
-      const colorString = me.cgColorString(shadow.color);
-      return shadowTemplate(shadow, colorString);
+      const cgColorString = me.cgColorString(shadow.color);
+      return shadowTemplate(shadow, cgColorString);
     };
 
     return me;

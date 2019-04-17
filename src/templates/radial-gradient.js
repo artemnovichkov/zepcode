@@ -8,7 +8,11 @@ final class RadialGradientView: UIView {
         return min(bounds.width / 2, bounds.height / 2)
     }
     
-    private let colors = [${colorStopsString}]
+    private let colors: [UIColor] = [${colorStopsString}]
+
+    var options: CGGradientDrawingOptions = CGGradientDrawingOptions(rawValue: 0)
+
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,7 +33,7 @@ final class RadialGradientView: UIView {
     
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let colorsCount = colors.count
-        let locations = (0...colorsCount - 1).map { i in
+        let locations = (0..<colorsCount).map { i in
             return CGFloat(i) / CGFloat(colorsCount)
         }
     
@@ -42,7 +46,7 @@ final class RadialGradientView: UIView {
                                     startRadius: 0,
                                     endCenter: center,
                                     endRadius: radius,
-                                    options: CGGradientDrawingOptions(rawValue: 0))
+                                    options: options)
     }
 }`;
 

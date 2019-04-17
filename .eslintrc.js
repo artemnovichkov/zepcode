@@ -17,6 +17,7 @@ module.exports = {
       'singleQuote': true,
       'trailingComma': 'es5'
     }],
+    'import/no-cycle': 'off'
   },
   'parser': 'babel-eslint',
 }

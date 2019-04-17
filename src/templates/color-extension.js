@@ -1,18 +1,4 @@
-import customColorTemplate from './custom-color';
-import literalColorTemplate from './literal-color';
-import colorTemplate from './color';
-
-
-let colorString = (initializerStyle, color) => {
-	switch(initializerStyle) {
-	  case 'custom':
-		return customColorTemplate(color);
-	  case 'literal':
-		return literalColorTemplate(color);
-	  default:
-		return colorTemplate(color);
-	}
-};
+import colorString from './color';
 
 const colorExtensionTemplate = (colors, needHeader, extensionOptions) =>`import UIKit
 

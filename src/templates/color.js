@@ -1,4 +1,17 @@
-const colorTemplate = color =>
-  `UIColor(red: ${color.r}/255, green: ${color.g}/255, blue: ${color.b}/255, alpha: ${color.a})`;
+import customColorTemplate from './custom-color';
+import literalColorTemplate from './literal-color';
+import colorTemplate from './default-color';
 
-export default colorTemplate;
+
+const colorString = (initializerStyle, color) => {
+	switch(initializerStyle) {
+	  case 'custom':
+		return customColorTemplate(color);
+	  case 'literal':
+		return literalColorTemplate(color);
+	  default:
+		return colorTemplate(color);
+	}
+};
+
+export default colorString;

@@ -1,5 +1,5 @@
-const linearGradientTemplate = (gradient, colorStopsString) =>
-  `import UIKit
+import PlaygroundSupport
+import UIKit
 
 final class LinearGradientLayer: CALayer {
 
@@ -83,7 +83,10 @@ final class GradientView: UIView {
     }
 }
 
-let view = GradientView()
-view.updateGradient(with: .horizontal, colors: ${colorStopsString})`;
+// MARK: - Example
 
-export default linearGradientTemplate;
+let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+let direction: LinearGradientLayer.Direction = .custom(start: CGPoint(x: 0, y: 0), end: CGPoint(x: 1, y: 1))
+gradientView.updateGradient(with: direction, colors: .magenta, .purple, .cyan)
+
+PlaygroundPage.current.liveView = gradientView
