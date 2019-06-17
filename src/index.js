@@ -1,11 +1,49 @@
 import zepcode from './zepcode';
 
-function styleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors, false);
+function container(context) {
+  return 'styleguide' in context ? context.styleguide : context.project;
 }
 
-function styleguideTextStyles(context, textStyles) {
-  return zepcode(context).generateFontExtension(textStyles);
+// Deprecated API
+function styleguideColors(context, oldColors) {
+  return zepcode(context).generateColorExtension(oldColors, false);
+}
+
+function styleguideTextStyles(context, oldTextStyles) {
+  return zepcode(context).generateFontExtension(oldTextStyles);
+}
+
+function exportStyleguideColors(context, oldColors) {
+  return zepcode(context).generateColorExtension(oldColors, true);
+}
+
+function exportStyleguideTextStyles(context, oldTextStyles) {
+  return zepcode(context).generateFontExtension(oldTextStyles);
+}
+
+function comment(context, text) {
+  return zepcode(context).commentString(text);
+}
+
+// New API
+function colors(context) {
+  const containerColors = container(context).colors;
+  return zepcode(context).generateColorExtension(containerColors, false);
+}
+
+function textStyles(context) {
+  const containerTextStyles = container(context).textStyles;
+  return zepcode(context).generateFontExtension(containerTextStyles);
+}
+
+function exportColors(context) {
+  const containerColors = container(context).colors;
+  return zepcode(context).generateColorExtension(containerColors, true);
+}
+
+function exportTextStyles(context) {
+  const containerTextStyles = container(context).textStyles;
+  return zepcode(context).generateFontExtension(containerTextStyles);
 }
 
 function layer(context, layerParams) {
@@ -72,20 +110,12 @@ function layer(context, layerParams) {
   return result;
 }
 
-function comment(context, text) {
-  return zepcode(context).commentString(text);
-}
-
-function exportStyleguideColors(context, colors) {
-  return zepcode(context).generateColorExtension(colors, true);
-}
-
-function exportStyleguideTextStyles(context, textStyles) {
-  return zepcode(context).generateFontExtension(textStyles);
-}
-
 export default {
   layer,
+  colors,
+  textStyles,
+  exportColors,
+  exportTextStyles,
   styleguideColors,
   styleguideTextStyles,
   exportStyleguideColors,
