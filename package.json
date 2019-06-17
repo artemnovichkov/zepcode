@@ -65,6 +65,9 @@
     "projectTypes": [
       "ios"
     ],
+    "platforms": [
+      "ios"
+    ],
     "repository": "http://github.com/artemnovichkov/zepcode",
     "options": [
       {
