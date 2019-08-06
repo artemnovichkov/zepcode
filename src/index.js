@@ -1,28 +1,9 @@
 import zepcode from './zepcode';
 
 function container(context) {
-  return 'styleguide' in context ? context.styleguide : context.project;
-}
-
-// Deprecated API
-function styleguideColors(context, oldColors) {
-  return zepcode(context).generateColorExtension(oldColors, false);
-}
-
-function styleguideTextStyles(context, oldTextStyles) {
-  return zepcode(context).generateFontExtension(oldTextStyles);
-}
-
-function exportStyleguideColors(context, oldColors) {
-  return zepcode(context).generateColorExtension(oldColors, true);
-}
-
-function exportStyleguideTextStyles(context, oldTextStyles) {
-  return zepcode(context).generateFontExtension(oldTextStyles);
-}
-
-function comment(context, text) {
-  return zepcode(context).commentString(text);
+  return context.styleguide === undefined
+    ? context.project
+    : context.styleguide;
 }
 
 // New API
@@ -31,19 +12,9 @@ function colors(context) {
   return zepcode(context).generateColorExtension(containerColors, false);
 }
 
-function textStyles(context) {
-  const containerTextStyles = container(context).textStyles;
-  return zepcode(context).generateFontExtension(containerTextStyles);
-}
-
 function exportColors(context) {
   const containerColors = container(context).colors;
   return zepcode(context).generateColorExtension(containerColors, true);
-}
-
-function exportTextStyles(context) {
-  const containerTextStyles = container(context).textStyles;
-  return zepcode(context).generateFontExtension(containerTextStyles);
 }
 
 function layer(context, layerParams) {
@@ -110,15 +81,24 @@ function layer(context, layerParams) {
   return result;
 }
 
+// Deprecated API
+function styleguideColors(context, oldColors) {
+  return zepcode(context).generateColorExtension(oldColors, false);
+}
+
+function exportStyleguideColors(context, oldColors) {
+  return zepcode(context).generateColorExtension(oldColors, true);
+}
+
+function comment(context, text) {
+  return zepcode(context).commentString(text);
+}
+
 export default {
   layer,
   colors,
-  textStyles,
   exportColors,
-  exportTextStyles,
   styleguideColors,
-  styleguideTextStyles,
   exportStyleguideColors,
-  exportStyleguideTextStyles,
   comment,
 };

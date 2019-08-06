@@ -3,7 +3,6 @@ import customColorTemplate from './templates/custom-color';
 import colorTemplate from './templates/color';
 import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
-import fontExtensionTemplate from './templates/font-extension';
 
 export function cgColorString(color, project, extensionOptions) {
   const styleguideColor = project.findColorEqual(color);
@@ -27,18 +26,6 @@ export function generateColorExtension(colors, extensionOptions) {
     code: colorExtensionTemplate(colors, extensionOptions),
     language: 'swift',
     filename: 'UIColor+AppColors.swift',
-  };
-}
-
-export function generateFontExtension(textStyles) {
-  const uniqueFonts = Array.from(
-    new Set(textStyles.map(style => style.fontFace))
-  ).sort();
-
-  return {
-    code: fontExtensionTemplate(uniqueFonts),
-    language: 'swift',
-    filename: 'UIFont+AppFonts.swift',
   };
 }
 

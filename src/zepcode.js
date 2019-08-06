@@ -2,7 +2,6 @@ import colorString from './templates/color';
 import colorExtensionTemplate from './templates/color-extension';
 import linearGradientTemplate from './templates/linear-gradient';
 import radialGradientTemplate from './templates/radial-gradient';
-import fontExtensionTemplate from './templates/font-extension';
 import headerTemplate from './templates/header';
 import shadowTemplate from './templates/shadow';
 import customShadowTemplate from './templates/custom-shadow';
@@ -66,18 +65,6 @@ const zepcode = (() => {
         code: string,
         language: 'swift',
         filename: fileName,
-      };
-    };
-
-    me.generateFontExtension = textStyles => {
-      const uniqueFonts = Array.from(
-        new Set(textStyles.map(style => style.fontFace))
-      ).sort();
-
-      return {
-        code: fontExtensionTemplate(uniqueFonts),
-        language: 'swift',
-        filename: 'UIFont+AppFonts.swift',
       };
     };
 
