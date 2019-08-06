@@ -48,7 +48,6 @@ export function radialGradientLayer(gradient, project, extensionOptions) {
 export default {
   generateColorExtension,
   cgColorString,
-  generateFontExtension,
   linearGradientLayer,
   radialGradientLayer,
 };
