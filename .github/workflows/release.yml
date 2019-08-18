@@ -1,0 +1,26 @@
+on: release
+name: Build, Test, and Publish
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      uses: actions/npm@master
+      with:
+        args: install
+    - name: Test
+      uses: actions/npm@master
+      with:
+        args: test
+    - name: Master
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
+    - name: Publish
+      uses: artemnovichkov/action-zem@master
+      env:
+        ZEM_TOKEN: ${{ secrets.ZEM_TOKEN }}
+      with:
+        args: publish
