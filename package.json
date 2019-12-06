@@ -77,9 +77,9 @@
         "default": true
       },
       {
-        "name": "Initializer style",
+        "name": "Color initializer style",
         "type": "picker",
-        "id": "initializer_style",
+        "id": "color_initializer_style",
         "default": "default",
         "options": [
           {
@@ -93,6 +93,10 @@
           {
             "name": "Literal",
             "value": "literal"
+          },
+          {
+            "name": "Colorset",
+            "value": "colorset"
           }
         ]
       },

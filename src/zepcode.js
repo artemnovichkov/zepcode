@@ -15,7 +15,7 @@ const zepcode = (() => {
       me = {
         options: {
           useColorNames: privateContext.getOption('use_color_names'),
-          initializerStyle: privateContext.getOption('initializer_style'),
+          initializerStyle: privateContext.getOption('color_initializer_style'),
           useLayerShadowExtension: privateContext.getOption(
             'use_layer_shadow_extension'
           ),
