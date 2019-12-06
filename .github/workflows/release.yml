@@ -1,4 +1,6 @@
-on: release
+on: 
+  release:
+    types: [created, edited]
 name: Build, Test, and Publish
 jobs:
   build:
@@ -7,7 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Test
-      run: npm test
+      run: |
+        npm i
+        npm test
     - name: Publish
       uses: artemnovichkov/action-zem@master
       env:
