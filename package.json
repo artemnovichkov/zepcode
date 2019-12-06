@@ -31,11 +31,11 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-loader": "2.1.2",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "husky": "^1.3.1",
     "lint-staged": "^8.2.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   },
   "repository": "http://github.com/artemnovichkov/zepcode",
   "author": {
@@ -77,9 +77,9 @@
         "default": true
       },
       {
-        "name": "Initializer style",
+        "name": "Color initializer style",
         "type": "picker",
-        "id": "initializer_style",
+        "id": "color_initializer_style",
         "default": "default",
         "options": [
           {
@@ -93,6 +93,10 @@
           {
             "name": "Literal",
             "value": "literal"
+          },
+          {
+            "name": "Colorset",
+            "value": "colorset"
           }
         ]
       },
