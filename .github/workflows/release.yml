@@ -1,6 +1,6 @@
 on: 
   release:
-    types: [created, edited]
+    types: [published]
 name: Build, Test, and Publish
 jobs:
   build:
