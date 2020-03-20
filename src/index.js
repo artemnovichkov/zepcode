@@ -1,20 +1,27 @@
 import zepcode from './zepcode';
 
-function container(context) {
-  return context.styleguide === undefined
-    ? context.project
-    : context.styleguide;
+function contextColors(context) {
+  let allColors = [];
+  if (context.styleguide === undefined) {
+    allColors = allColors.concat(context.project.colors);
+    if (context.project.linkedStyleguide !== undefined) {
+      allColors = allColors.concat(context.project.linkedStyleguide.colors);
+    }
+  } else {
+    allColors = allColors.concat(context.styleguide.colors);
+  }
+  return allColors;
 }
 
 // New API
 function colors(context) {
-  const containerColors = container(context).colors;
-  return zepcode(context).generateColorExtension(containerColors, false);
+  const projectColors = contextColors(context);
+  return zepcode(context).generateColorExtension(projectColors, false);
 }
 
 function exportColors(context) {
-  const containerColors = container(context).colors;
-  return zepcode(context).generateColorExtension(containerColors, true);
+  const projectColors = contextColors(context);
+  return zepcode(context).generateColorExtension(projectColors, true);
 }
 
 function layer(context, layerParams) {
