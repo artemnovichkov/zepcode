@@ -204,7 +204,7 @@ extension CALayer {
 
 ## How to Install
 
-Zepcode is available on [Zeplin Extensions](extensions.zeplin.io).
+Zepcode is available on [Zeplin Extensions](https://extensions.zeplin.io).
 
 ## How to make a changes
 
