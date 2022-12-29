@@ -23,13 +23,13 @@
     }
   },
   "dependencies": {
-    "zem": "^0.4.0"
+    "zem": "^1.3.1"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-prettier": "^4.3.0",
-    "eslint-loader": "2.1.2",
+    "eslint-loader": "4.0.2",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^1.3.1",
