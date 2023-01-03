@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "zem": "^0.4.0"
+    "zem": "^1.3.1"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
